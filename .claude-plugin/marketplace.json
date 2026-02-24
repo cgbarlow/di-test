@@ -1,0 +1,26 @@
+{
+  "name": "di-test-marketplace",
+  "metadata": {
+    "description": "DI Accessibility Testing Platform — finds WCAG violations and catches patterns automated tools miss.",
+    "version": "0.2.1"
+  },
+  "owner": {
+    "name": "Chris Barlow",
+    "url": "https://github.com/cgbarlow"
+  },
+  "plugins": [
+    {
+      "name": "di-test",
+      "description": "Accessibility testing tool that finds WCAG violations and catches patterns automated tools miss — like text that looks like a heading but isn't marked up as one. Install as a Claude Code plugin and scan any URL.",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/cgbarlow/di-test.git"
+      },
+      "author": {
+        "name": "Chris Barlow"
+      },
+      "license": "CC-BY-SA-4.0",
+      "keywords": ["accessibility", "wcag", "a11y", "testing", "cwac", "axe-core"]
+    }
+  ]
+}

@@ -1,8 +1,10 @@
 {
   "name": "di-test",
+  "description": "Accessibility testing tool that finds WCAG violations and catches patterns automated tools miss — like text that looks like a heading but isn't marked up as one. Install as a Claude Code plugin and scan any URL.",
   "version": "0.2.1",
-  "description": "Accessibility testing platform combining visual pattern detection with WCAG compliance scanning via CWAC and Playwright MCP servers.",
-  "author": "Chris Barlow",
+  "author": {
+    "name": "Chris Barlow"
+  },
   "skills": [
     {"name": "scan", "path": "../skills/scan/SKILL.md"},
     {"name": "scan-status", "path": "../skills/scan-status/SKILL.md"},
