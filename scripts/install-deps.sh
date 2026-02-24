@@ -11,9 +11,9 @@ CWAC_INSTALL_DIR="${HOME}/.local/share/di-test/cwac"
 echo "[di-test] Checking dependencies..."
 
 # ------------------------------------------------------------------
-# Python dependencies
+# Python dependencies (must come first — playwright package needed later)
 # ------------------------------------------------------------------
-if ! python3 -c "import mcp" 2>/dev/null; then
+if ! python3 -c "import mcp" 2>/dev/null || ! python3 -c "import playwright" 2>/dev/null; then
     echo "[di-test] Installing Python dependencies..."
     pip install -q -r "$PROJECT_ROOT/cwac_mcp/requirements.txt"
 else
@@ -21,28 +21,31 @@ else
 fi
 
 # ------------------------------------------------------------------
-# Playwright Python package + browser
+# Node.js dependencies (must come before Playwright browser install)
 # ------------------------------------------------------------------
-if ! python3 -c "import playwright" 2>/dev/null; then
-    echo "[di-test] Installing Playwright Python package..."
-    pip install -q playwright
+if [ ! -d "$PROJECT_ROOT/node_modules/playwright" ] || [ ! -d "$PROJECT_ROOT/node_modules/axe-core" ]; then
+    echo "[di-test] Installing Node.js dependencies..."
+    cd "$PROJECT_ROOT" && npm install --silent 2>/dev/null || echo "[di-test] WARNING: npm install failed (non-fatal)."
+else
+    echo "[di-test] Node.js dependencies already installed."
 fi
 
-if ! python3 -c "from playwright.sync_api import sync_playwright; sync_playwright()" 2>/dev/null; then
+# ------------------------------------------------------------------
+# Playwright browser (must come after both pip install and npm install)
+# ------------------------------------------------------------------
+if ! python3 -c "
+from playwright.sync_api import sync_playwright
+p = sync_playwright().start()
+try:
+    b = p.chromium.launch(headless=True)
+    b.close()
+finally:
+    p.stop()
+" 2>/dev/null; then
     echo "[di-test] Installing Playwright Chromium browser..."
     python3 -m playwright install chromium 2>/dev/null || echo "[di-test] WARNING: Playwright browser install failed (non-fatal)."
 else
     echo "[di-test] Playwright browser already installed."
-fi
-
-# ------------------------------------------------------------------
-# Node.js dependencies (Playwright + axe-core)
-# ------------------------------------------------------------------
-if [ ! -d "$PROJECT_ROOT/node_modules/playwright" ] || [ ! -d "$PROJECT_ROOT/node_modules/axe-core" ]; then
-    echo "[di-test] Installing Node.js dependencies..."
-    cd "$PROJECT_ROOT" && npm install --silent
-else
-    echo "[di-test] Node.js dependencies already installed."
 fi
 
 # ------------------------------------------------------------------

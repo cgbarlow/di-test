@@ -208,7 +208,17 @@ def _run_scan(config_path: str) -> None:
     base_url = urls[0]
 
     with sync_playwright() as pw:
-        browser = pw.chromium.launch(headless=True)
+        try:
+            browser = pw.chromium.launch(headless=True)
+        except Exception:
+            # Browser not installed — try to install it automatically.
+            print("Playwright browser not found. Installing Chromium...")
+            import subprocess as _sp
+            _sp.run(
+                [sys.executable, "-m", "playwright", "install", "chromium"],
+                check=True,
+            )
+            browser = pw.chromium.launch(headless=True)
         context = browser.new_context()
         page = context.new_page()
 
