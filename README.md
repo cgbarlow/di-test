@@ -38,7 +38,7 @@ These principles guide everything the tool does:
 
 ### Claude Desktop (Cowork or Code tab)
 
-* Uses Fallback mode: Visual patterns + axe-core, no CWAC.*
+*Uses Fallback mode: Visual patterns + axe-core, no CWAC.*
 
 1. Select **+** then **Plugins** then **Add plugin**
 2. Select the **By Anthropic** dropdown, then **Add marketplace from GitHub** and enter:
@@ -53,7 +53,7 @@ These principles guide everything the tool does:
 
 ### Claude Code (CLI)
 
-* Mode used depends on environment, x86-64 system required for full CWAC suite.*
+*Mode used depends on environment, x86-64 system required for full CWAC suite.*
   
 1. In a Claude Code session:
    ```
