@@ -6,6 +6,12 @@
         "-y",
         "@playwright/mcp@latest"
       ]
+    },
+    "cwac": {
+      "command": "python",
+      "args": [
+        "/workspaces/di-test/cwac_mcp/server.py"
+      ]
     }
   }
 }

@@ -1,16 +1,26 @@
-# Check My Website — Accessibility Pattern Scanner
+# di-test — Accessibility Testing Platform
 
-A tool that scans webpages and detects visual patterns (headings, cards) that may need accessibility review. It complements CWAC scans by flagging elements that *look like* headings or cards but may lack proper semantic markup.
+A comprehensive accessibility testing platform combining visual pattern detection with WCAG compliance scanning. It integrates two complementary approaches via MCP (Model Context Protocol) servers, giving Claude Code (or any MCP-compatible LLM) the ability to run both visual heuristic analysis and full CWAC accessibility audits from a single conversational interface.
 
-This tool **flags patterns, not violations**. It never auto-fails WCAG.
+## Two MCP Servers, Two Approaches
+
+| Server | What it does | How it works |
+|--------|-------------|--------------|
+| **Playwright MCP** | Visual pattern detection — finds elements that *look like* headings or cards but may lack semantic markup | LLM-driven browser automation using Gherkin test scenarios |
+| **CWAC MCP** | WCAG compliance scanning — runs axe-core, language, reflow, and other accessibility audits | Subprocess wrapper around [GOVTNZ/cwac](https://github.com/GOVTNZ/cwac) |
+
+Together they provide a complete accessibility audit workflow: CWAC finds WCAG violations, while the visual pattern scanner catches elements that pass automated checks but may still confuse users.
+
+---
 
 ## Quick Start
 
 ### Prerequisites
 
-- [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) (or any LLM client that supports MCP)
-- Node.js (v18+)
-- A Chromium browser (installed automatically on first run)
+- [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) (or any MCP-compatible LLM client)
+- Python 3.10+
+- Node.js v18+
+- [CWAC](https://github.com/GOVTNZ/cwac) installed at `/workspaces/cwac` (for CWAC MCP)
 
 ### Setup
 
@@ -22,180 +32,188 @@ This tool **flags patterns, not violations**. It never auto-fails WCAG.
 
 2. Install dependencies:
    ```bash
+   # Playwright MCP (visual pattern scanner)
    npm install
    npx playwright install --with-deps chromium
+
+   # CWAC MCP server
+   pip install -r cwac_mcp/requirements.txt
    ```
 
-3. The Playwright MCP server is already configured in `.mcp.json`. Claude Code will pick it up automatically.
+3. Both MCP servers are configured in `.mcp.json`. Claude Code will discover them automatically.
 
-### Running a Scan
+---
 
-Open Claude Code in the project directory and prompt it to run the tests against your target page. The Gherkin test scenarios in `tests/` define the full analysis pipeline.
+## CWAC MCP Server
 
-**Basic scan:**
+The CWAC MCP server wraps the [Centralised Web Accessibility Checker](https://github.com/GOVTNZ/cwac) as an MCP server, exposing 6 tools for scan lifecycle management.
+
+### Architecture
+
+```
+Claude Code
+    │
+    ▼
+┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+│  CWAC MCP    │────▶│  Subprocess  │────▶│    CWAC      │
+│  Server      │     │  Runner      │     │  (cwac.py)   │
+│  (FastMCP)   │     │              │     │              │
+└──────────────┘     └──────────────┘     └──────────────┘
+    │                                          │
+    ▼                                          ▼
+┌──────────────┐                        ┌──────────────┐
+│ Scan Registry│                        │  Results CSV │
+│ (in-memory)  │                        │  files       │
+└──────────────┘                        └──────────────┘
+    │                                          │
+    ▼                                          ▼
+┌──────────────┐                        ┌──────────────┐
+│Config Builder│                        │Result Reader │
+│ (temp JSON)  │                        │ (CSV parser) │
+└──────────────┘                        └──────────────┘
+```
+
+The server runs CWAC as a **subprocess** with `cwd=/workspaces/cwac` rather than importing it directly. This avoids modifying CWAC's source code and handles its reliance on relative paths (`./config/`, `./base_urls/`, `./results/`). See [ADR-002](docs/adr/ADR-002-subprocess-vs-direct-import.md) for the full rationale.
+
+### MCP Tools
+
+| Tool | Description |
+|------|-------------|
+| `cwac_scan` | Start a CWAC accessibility scan. Accepts URLs, audit name, plugin toggles, crawl depth, and viewport sizes. Returns a scan ID for tracking. |
+| `cwac_scan_status` | Check scan status (running/complete/failed), elapsed time, and recent output. |
+| `cwac_get_results` | Retrieve scan results with optional filters by audit type, impact level, and row limit. |
+| `cwac_get_summary` | Get aggregated summary: total issues, breakdown by audit type, axe impact distribution, top violations. |
+| `cwac_list_scans` | List all active and historical scan result directories. |
+| `cwac_generate_report` | Run CWAC's report exporter to generate leaderboard CSVs from scan results. |
+
+### CWAC MCP Usage Examples
+
+**Run a basic accessibility scan:**
+```
+Scan https://www.example.govt.nz for accessibility issues using CWAC
+```
+
+**Scan multiple URLs with specific settings:**
+```
+Run a CWAC scan on these URLs with max 10 pages per domain:
+- https://www.site1.govt.nz
+- https://www.site2.govt.nz
+```
+
+**Check scan progress:**
+```
+What's the status of the CWAC scan?
+```
+
+**Get a summary of findings:**
+```
+Show me a summary of the CWAC scan results
+```
+
+**Filter results by severity:**
+```
+Show me only the critical axe-core issues from the scan
+```
+
+**Generate a report:**
+```
+Generate a leaderboard report from the CWAC scan results
+```
+
+### Scan Lifecycle
+
+1. **Initiate** — `cwac_scan` builds config, writes base URLs CSV, launches CWAC subprocess
+2. **Monitor** — `cwac_scan_status` polls the subprocess for progress
+3. **Retrieve** — `cwac_get_results` or `cwac_get_summary` reads result CSVs
+4. **Report** — `cwac_generate_report` runs the export pipeline
+
+Scans are non-blocking: `cwac_scan` returns immediately with a scan ID, and you can check status while the scan runs. See [ADR-003](docs/adr/ADR-003-scan-lifecycle-management.md) for the lifecycle design.
+
+### Available Plugins
+
+| Plugin | Key | Default |
+|--------|-----|---------|
+| Axe-core audit | `axe_core_audit` | Enabled |
+| Language audit | `language_audit` | Enabled |
+| Reflow audit | `reflow_audit` | Enabled |
+| Focus indicator audit | `focus_indicator_audit` | Disabled |
+| Screenshot audit | `screenshot_audit` | Disabled |
+| Element audit | `element_audit` | Disabled |
+
+---
+
+## Visual Pattern Scanner (Playwright MCP)
+
+The visual pattern scanner detects elements that *look like* headings or cards but may lack proper semantic markup. It uses LLM-driven browser automation with Gherkin test scenarios.
+
+This tool **flags patterns, not violations**. It never auto-fails WCAG.
+
+### Running a Visual Scan
+
 ```
 Run the tests against https://www.fincap.org.nz/our-team/ using Playwright MCP
 ```
 
-**Scan a different page:**
-```
-Run the heading detection and card detection tests against https://example.com/team/ using Playwright MCP
-```
+This runs a 6-layer analysis pipeline:
 
-**Run a single feature:**
-```
-Run just the heading-detection.feature tests against https://www.fincap.org.nz/our-team/
-```
+1. **DOM Analyzer** — Class-based heading detection (deterministic)
+2. **Visual Analyzer** — Heading-like visual patterns (rules-based)
+3. **Card Detector** — Card candidate structure detection (heuristic)
+4. **AI Reasoning** — Classification + plain language explanation
+5. **Screenshot Capture** — Full-page + cropped + highlight overlays
+6. **Reporter** — Structured JSON + report compilation
 
-The LLM translates each Gherkin scenario into Playwright MCP browser automation tool calls, executing the 6-layer analysis pipeline against the live page.
+### Visual Scanner Usage Examples
 
-## Usage Examples
-
-### Example 1: Full scan with report
-
+**Full scan with report:**
 ```
 Scan https://www.fincap.org.nz/our-team/ using Playwright MCP and generate a detailed report
 ```
 
-This will:
-1. Navigate to the page and verify it loads
-2. Extract all text nodes with computed styles
-3. Run DOM analysis (class-based heading detection)
-4. Run visual analysis (font size, weight, isolation, spacing)
-5. Run card detection (structure, repeated patterns, shared links)
-6. Classify each candidate with AI (confidence scores, plain language explanations)
-7. Capture screenshots with highlight overlays
-8. Produce structured JSON output and a markdown/docx report
-
-### Example 2: Heading-only check
-
+**Heading-only check:**
 ```
 Check https://example.com for elements that look like headings but aren't marked up as headings
 ```
 
-### Example 3: Card pattern detection
-
+**Card pattern detection:**
 ```
 Scan https://example.com/team/ for card-like content structures using Playwright MCP
 ```
 
-### Example 4: Generate a report after scanning
+### What It Detects
 
-```
-Create a detailed report based on your findings
-```
+**Heading-like content:**
 
-```
-Convert the report to docx
-```
+| Method | What it finds |
+|--------|--------------|
+| Class-based (DOM) | Elements with class names containing h1-h6 |
+| Visual analysis | Text visually styled as a heading (larger, bolder, isolated, spaced) |
+| Non-semantic tags | Elements that look like headings but use `<div>`, `<span>`, `<p>` |
 
-## Example Report
+**Card-like content:**
 
-A complete scan has been run against the [FinCap Our Team page](https://www.fincap.org.nz/our-team/) as a proof of concept. The full output is available in this repository:
+| Method | What it finds |
+|--------|--------------|
+| Link-wrapped groups | An `<a>` wrapping an image + heading + body text |
+| Shared destinations | Multiple elements linking to the same URL within a container |
+| Repeated patterns | Groups with matching DOM structure and CSS classes |
+| Structural heuristics | Shared parent containers, vertical alignment, bounding box adjacency |
+
+### Example Report
+
+A complete scan has been run against the [FinCap Our Team page](https://www.fincap.org.nz/our-team/) as a proof of concept:
 
 | File | Description |
 |------|-------------|
-| [Scan Report (Markdown)](output/accessibility-scan-report.md) | Detailed findings report with analysis, tables, and recommendations |
-| [Scan Report (Word)](output/accessibility-scan-report.docx) | Same report in .docx format for stakeholder distribution |
+| [Scan Report (Markdown)](output/accessibility-scan-report.md) | Detailed findings with analysis and recommendations |
+| [Scan Report (Word)](output/accessibility-scan-report.docx) | Same report in .docx format |
 | [Findings JSON](output/findings.json) | Structured JSON output with all 38 findings |
-| [Full Page Screenshot](output/screenshots/our-team-full.png) | Full-page capture of the target page |
-| [Highlighted Screenshot](output/screenshots/our-team-highlighted.png) | Full-page with red overlays on flagged elements |
-| [Cropped: Fleur Howard](output/screenshots/our-team-item0.png) | Example cropped card screenshot |
-| [Cropped: Jake Lilley](output/screenshots/our-team-item1.png) | Example cropped card screenshot |
-| [Cropped: Iuni Perez](output/screenshots/our-team-item2.png) | Example cropped card screenshot |
+| [Full Page Screenshot](output/screenshots/our-team-full.png) | Full-page capture |
+| [Highlighted Screenshot](output/screenshots/our-team-highlighted.png) | Red overlays on flagged elements |
 
-### Key findings from the example scan
+Key findings: 19 heading-like candidates (team member names using `<p class="h3">` instead of `<h3>`), 19 card-like candidates (repeated `<article>` structures), a link mismatch, and an empty `<h2>`.
 
-- **19 heading-like candidates** — All team member names use `<p class="h3 card-title">` instead of semantic `<h3>` tags. They score 5/5 on visual heading signals (larger font, heavier weight, isolated line, vertical spacing, precedes content).
-- **19 card-like candidates** — Repeated `<article>` structures each containing image + name + title + description + link, using `stretched-link` for full-card click behaviour.
-- **Link mismatch** — Katie Brannan's card links to `/people/bella-tioro/` (possible content error).
-- **Empty heading** — An empty `<h2>` in the footer social media section.
-
-### Example JSON output
-
-Each finding follows this structure:
-
-```json
-{
-  "url": "https://www.fincap.org.nz/our-team/",
-  "type": "Heading-like content",
-  "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: larger font size (30px vs 18px body), heavier weight (500 vs 400), isolated on its own line, with vertical margin separation.",
-  "location": {
-    "cssSelector": "section:nth-of-type(2) article:nth-child(1) p.h3.card-title",
-    "xpath": "/html/body/main/section[2]/div/div[2]/div[1]/article/div[2]/p[1]"
-  },
-  "visual": {
-    "fontSize": "30px",
-    "fontWeight": "500"
-  },
-  "screenshot": "our-team-item0.png",
-  "htmlSnippet": "<p class=\"h3 card-title mb-4\">Fleur Howard</p>",
-  "confidence": 0.95
-}
-```
-
-## What It Detects
-
-### Heading-like content
-
-| Method | What it finds |
-|--------|--------------|
-| **Class-based (DOM)** | Elements with class names containing h1–h6 (case-insensitive, partial match) |
-| **Visual analysis** | Text that is visually styled as a heading — larger, bolder, isolated on its own line, with vertical spacing, appearing before content blocks |
-| **Non-semantic tags** | Elements that look like headings but use `<div>`, `<span>`, `<p>`, or other non-heading tags |
-
-### Card-like content
-
-| Method | What it finds |
-|--------|--------------|
-| **Link-wrapped groups** | An `<a>` wrapping an image + heading + body text |
-| **Shared destinations** | Multiple elements linking to the same URL within a container |
-| **Repeated patterns** | Groups with matching DOM structure and CSS classes across the page |
-| **Structural heuristics** | Shared parent containers, vertical alignment, bounding box adjacency |
-
-## Architecture
-
-The tool runs a 6-layer analysis pipeline. Deterministic analysis always runs before AI — the AI interprets candidates, it does not discover elements from scratch.
-
-```
-Page Load
-  │
-  ▼
-┌─────────────────┐
-│  DOM Analyzer    │  Layer 1 — Class-based heading detection (deterministic)
-└────────┬────────┘
-         ▼
-┌─────────────────┐
-│ Visual Analyzer  │  Layer 2 — Heading-like visual patterns (rules-based)
-└────────┬────────┘
-         ▼
-┌─────────────────┐
-│  Card Detector   │  Layer 3 — Card candidate structure detection (heuristic)
-└────────┬────────┘
-         ▼
-┌─────────────────┐
-│  AI Reasoning    │  Layer 4 — Classification + plain language explanation
-└────────┬────────┘
-         ▼
-┌─────────────────┐
-│Screenshot Capture│  Layer 5 — Full-page + cropped + highlight overlays
-└────────┬────────┘
-         ▼
-┌─────────────────┐
-│    Reporter      │  Layer 6 — Structured JSON + report compilation
-└─────────────────┘
-```
-
-| Layer | Type | Purpose |
-|-------|------|---------|
-| DOM Analyzer | Deterministic | Detects class-based headings (h1–h6 in class names) |
-| Visual Analyzer | Rules-based | Detects heading-like visual patterns (font size, weight, isolation, spacing) |
-| Card Detector | Heuristic | Finds card candidate structures (link groups, repeated patterns, shared containers) |
-| AI Reasoning | LLM | Classifies candidates with confidence scores; explains findings in plain language |
-| Screenshot Capture | Automation | Captures full-page and cropped screenshots with highlight overlays |
-| Reporter | Output | Compiles structured JSON output and reports |
-
-## Output Format
+### Output Format
 
 Each finding includes:
 
@@ -210,13 +228,9 @@ Each finding includes:
 | `visual.fontWeight` | Computed font weight (heading-like only) |
 | `screenshot` | File path to the saved screenshot |
 | `htmlSnippet` | The element's outer HTML including attributes |
-| `confidence` | AI confidence score (0–1) |
+| `confidence` | AI confidence score (0-1) |
 
-See the [full specification](di-web-accessibility-spec.md) for the complete schema and detection rules.
-
-## Test Scenarios
-
-Test scenarios are written in Gherkin/BDD format under `tests/`. They define the expected behaviour of each pipeline layer and are executed by the LLM via Playwright MCP browser automation.
+### Test Scenarios
 
 | File | Scenarios | Covers |
 |------|-----------|--------|
@@ -227,72 +241,100 @@ Test scenarios are written in Gherkin/BDD format under `tests/`. They define the
 | `output-format.feature` | 9 | JSON output structure and field validation |
 | `ai-classification.feature` | 9 | AI input/output, confidence scoring, tone |
 
-**45 scenarios total**, targeting [FinCap Our Team](https://www.fincap.org.nz/our-team/) as the proof-of-concept page.
+**45 scenarios total** | 43 pass, 2 skipped (edge-case conditions)
 
-### Test Results (PoC Run)
-
-| Feature | Pass | Skip | Fail |
-|---------|------|------|------|
-| Page Crawl & Pipeline | 3 | 2 | 0 |
-| Heading Detection | 9 | 0 | 0 |
-| Card Detection | 8 | 0 | 0 |
-| Screenshot & Highlighting | 5 | 0 | 0 |
-| Output Format | 9 | 0 | 0 |
-| AI Classification | 9 | 0 | 0 |
-| **Total** | **43** | **2** | **0** |
-
-The 2 skipped scenarios require edge-case conditions (unreachable URL, page with zero findings) that don't apply to the live target page.
-
-## How It Works (Under the Hood)
-
-This tool uses the [Playwright MCP server](https://github.com/microsoft/playwright-mcp) to give an LLM direct browser control. The workflow is:
-
-1. **You prompt** Claude Code (or another MCP-capable LLM) with a scan request
-2. **The LLM reads** the Gherkin test scenarios in `tests/` to understand what to test
-3. **Playwright MCP** provides browser automation tools (navigate, evaluate JS, take screenshots)
-4. **The LLM executes** each scenario step by calling Playwright MCP tools — running JavaScript in the page to analyse DOM structure, computed styles, and visual patterns
-5. **AI classification** happens naturally as the LLM interprets the deterministic findings
-6. **Output** is saved as JSON, screenshots, and optionally a markdown/docx report
-
-No traditional test runner is needed. The Gherkin files serve as executable specifications that the LLM interprets and runs directly.
-
-## Design Principles
-
-- **Never auto-fail WCAG** — this tool flags patterns, not violations
-- **Explain, don't judge** — "This appears to function as a heading but is not marked up as one"
-- **Deterministic first, AI second** — AI interprets what rules-based analysis found, it does not discover elements from scratch
-- **Auditor trust > AI cleverness** — findings include selectors, XPaths, HTML snippets, and screenshots so auditors can independently verify
+---
 
 ## Project Structure
 
 ```
 di-test/
-├── .mcp.json                              # Playwright MCP server configuration
-├── di-web-accessibility-spec.md           # Detailed specification document
-├── tests/
-│   ├── page-crawl.feature                 # Page load and pipeline tests
-│   ├── heading-detection.feature          # Heading detection tests
-│   ├── card-detection.feature             # Card detection tests
-│   ├── screenshot-and-highlighting.feature # Screenshot tests
-│   ├── output-format.feature              # JSON output tests
-│   └── ai-classification.feature          # AI classification tests
-└── output/                                # Generated scan output
-    ├── accessibility-scan-report.md       # Example report (Markdown)
-    ├── accessibility-scan-report.docx     # Example report (Word)
-    ├── findings.json                      # Example JSON findings
-    └── screenshots/                       # Example screenshots
-        ├── our-team-full.png
-        ├── our-team-highlighted.png
-        ├── our-team-item0.png
-        ├── our-team-item1.png
-        └── our-team-item2.png
+├── .mcp.json                              # MCP server configuration (Playwright + CWAC)
+├── di-web-accessibility-spec.md           # Visual scanner specification
+├── cwac_mcp/                              # CWAC MCP server
+│   ├── __init__.py                        # Package init, CWAC_PATH constant
+│   ├── server.py                          # FastMCP server with 6 tool definitions
+│   ├── cwac_runner.py                     # Subprocess execution of CWAC
+│   ├── config_builder.py                  # Builds CWAC config JSON from tool params
+│   ├── result_reader.py                   # Reads/parses CWAC result CSVs
+│   ├── scan_registry.py                   # Tracks active/completed scans in memory
+│   └── requirements.txt                   # Python dependencies (mcp[cli])
+├── docs/
+│   ├── adr/                               # Architecture Decision Records
+│   │   ├── ADR-001-cwac-mcp-integration-approach.md
+│   │   ├── ADR-002-subprocess-vs-direct-import.md
+│   │   └── ADR-003-scan-lifecycle-management.md
+│   └── specs/                             # Technical Specifications
+│       ├── SPEC-001-A-mcp-tool-definitions.md
+│       ├── SPEC-002-A-subprocess-execution-model.md
+│       └── SPEC-003-A-scan-registry-design.md
+├── tests/                                 # Gherkin test scenarios (visual scanner)
+│   ├── page-crawl.feature
+│   ├── heading-detection.feature
+│   ├── card-detection.feature
+│   ├── screenshot-and-highlighting.feature
+│   ├── output-format.feature
+│   └── ai-classification.feature
+└── output/                                # Generated scan output (visual scanner)
+    ├── accessibility-scan-report.md
+    ├── accessibility-scan-report.docx
+    ├── findings.json
+    └── screenshots/
 ```
+
+## Documentation
+
+### Architecture Decision Records (ADRs)
+
+All architectural decisions are documented using the WH(Y) ADR format:
+
+| ADR | Decision | Key Trade-off |
+|-----|----------|---------------|
+| [ADR-001](docs/adr/ADR-001-cwac-mcp-integration-approach.md) | MCP server wrapper for CWAC integration | MCP provides structured tools + Claude Code integration; requires additional server process |
+| [ADR-002](docs/adr/ADR-002-subprocess-vs-direct-import.md) | Subprocess execution instead of direct Python import | Zero CWAC modifications + update compatibility; subprocess overhead + temp file management |
+| [ADR-003](docs/adr/ADR-003-scan-lifecycle-management.md) | Async scan model with in-memory registry | Non-blocking scans + concurrent support; state lost on server restart |
+
+### Technical Specifications
+
+| Spec | Covers | Parent ADR |
+|------|--------|-----------|
+| [SPEC-001-A](docs/specs/SPEC-001-A-mcp-tool-definitions.md) | All 6 MCP tool definitions with parameters, return values, and behaviour | ADR-001 |
+| [SPEC-002-A](docs/specs/SPEC-002-A-subprocess-execution-model.md) | Subprocess invocation, config generation, process monitoring, cleanup | ADR-002 |
+| [SPEC-003-A](docs/specs/SPEC-003-A-scan-registry-design.md) | Scan registry data structure, state transitions, thread safety | ADR-003 |
+
+## Design Principles
+
+- **Never auto-fail WCAG** — the visual scanner flags patterns, not violations
+- **Explain, don't judge** — findings include plain language explanations
+- **Deterministic first, AI second** — AI interprets what rules-based analysis found
+- **Auditor trust > AI cleverness** — findings include selectors, XPaths, HTML snippets, and screenshots
+- **Zero modification to CWAC** — the MCP server wraps CWAC without changing its source
+
+## How It Works (Under the Hood)
+
+### Playwright MCP (Visual Scanner)
+
+1. You prompt Claude Code with a scan request
+2. The LLM reads the Gherkin test scenarios in `tests/`
+3. Playwright MCP provides browser automation tools
+4. The LLM executes each scenario step via Playwright MCP tool calls
+5. AI classification interprets the deterministic findings
+6. Output is saved as JSON, screenshots, and reports
+
+### CWAC MCP
+
+1. You prompt Claude Code to run a CWAC scan
+2. The MCP server generates a config JSON and base URLs CSV
+3. CWAC runs as a subprocess in its own directory
+4. The scan registry tracks progress via subprocess polling
+5. Results are read from CWAC's CSV output files
+6. Summaries and reports are generated on demand
 
 ## Future Scope
 
-- Interactive/dynamic content detection (right-side panels, modals)
+- Interactive/dynamic content detection (modals, panels)
 - Sticky/fixed-position content detection
-- CSV export for spreadsheet workflows
+- Persistent scan state across server restarts
+- Scan cancellation support
 - Web UI report viewer
-- Integration with CWAC scan IDs
-- Multi-page crawling
+- Combined reporting (visual + CWAC findings in one report)
