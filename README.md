@@ -59,13 +59,14 @@ You can use these commands, but you don't have to. You can simply ask in natural
 
 | Command | What it does |
 |---------|-------------|
-| `/di-test:scan` | Run an accessibility scan against one or more URLs |
+| `/di-test:full-scan` | Run both CWAC + visual scans and generate all reports |
+| `/di-test:scan` | Run a CWAC accessibility scan against one or more URLs |
+| `/di-test:visual-scan` | Run visual pattern detection (headings, cards) |
+| `/di-test:report` | Generate a report in Markdown and Word formats |
 | `/di-test:scan-status` | Check the status of a running scan |
 | `/di-test:results` | Get detailed findings from a completed scan |
 | `/di-test:summary` | Get a high-level summary of findings |
-| `/di-test:report` | Generate a report in Markdown and Word formats |
 | `/di-test:list-scans` | List all active and historical scan results |
-| `/di-test:visual-scan` | Run visual pattern detection (headings, cards) |
 
 ---
 
