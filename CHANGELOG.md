@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.3] - 2026-02-24
+
+### Fixed
+
+- **CWAC auto-install** — SessionStart hook now clones CWAC from GitHub to `~/.local/share/di-test/cwac/` if not found, and installs its Python deps, Node deps, and Chrome automatically. Plugin users no longer need to manually install CWAC.
+- **CWAC discovery chain** — Added `~/.local/share/di-test/cwac/` as step 4 in the discovery chain (after env var, sibling dir, and `/workspaces/cwac`).
+
 ## [0.2.2] - 2026-02-24
 
 ### Fixed
