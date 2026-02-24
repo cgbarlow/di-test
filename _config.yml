@@ -15,5 +15,7 @@ exclude:
   - package.json
   - package-lock.json
   - .mcp.json
+  - docs/specs/
+  - docs/adr/
   - .claude-plugin/
   - .campaign/
