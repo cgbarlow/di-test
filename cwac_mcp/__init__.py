@@ -13,7 +13,7 @@ def _discover_cwac_path() -> str:
     4. ~/.local/share/di-test/cwac (plugin auto-install location)
 
     Returns:
-        Absolute path to the CWAC installation directory.
+        Absolute path to the CWAC installation directory, or None if not found.
     """
     # 1. Environment variable
     env_path = os.environ.get("CWAC_PATH")
@@ -39,4 +39,11 @@ def _discover_cwac_path() -> str:
     return "/workspaces/cwac"
 
 
+# Project root (the di-test repo directory).
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# CWAC installation path.
 CWAC_PATH = _discover_cwac_path()
+
+# Default results roots for scan output discovery.
+RESULTS_ROOT = os.path.join(CWAC_PATH, "results")

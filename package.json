@@ -1,6 +1,6 @@
 {
   "name": "di-test",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "description": "A tool that scans webpages and detects visual patterns (headings, cards) that may need accessibility review. It complements CWAC scans by flagging elements that *look like* headings or cards but may lack proper semantic markup.",
   "main": "index.js",
   "directories": {
@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/cgbarlow/di-test#readme",
   "dependencies": {
-    "@playwright/test": "^1.58.2"
+    "@playwright/test": "^1.58.2",
+    "axe-core": "^4.10.0"
   }
 }

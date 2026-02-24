@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Page With Violations</title>
+</head>
+<body>
+    <h1>Test Page</h1>
+
+    <!-- Missing alt text (image-alt violation) -->
+    <img src="hero.jpg">
+
+    <!-- Incorrect list structure (list violation) -->
+    <ul>
+        <div>Item 1</div>
+        <div>Item 2</div>
+    </ul>
+
+    <!-- Color contrast issue -->
+    <p style="color: #aaa; background-color: #fff;">Low contrast text</p>
+
+    <!-- Missing form label (label violation) -->
+    <input type="text" name="search">
+
+    <!-- Link with no discernible text (link-name violation) -->
+    <a href="/page"><img src="icon.png"></a>
+</body>
+</html>

@@ -21,9 +21,24 @@ else
 fi
 
 # ------------------------------------------------------------------
-# Node.js dependencies (Playwright)
+# Playwright Python package + browser
 # ------------------------------------------------------------------
-if [ ! -d "$PROJECT_ROOT/node_modules/playwright" ]; then
+if ! python3 -c "import playwright" 2>/dev/null; then
+    echo "[di-test] Installing Playwright Python package..."
+    pip install -q playwright
+fi
+
+if ! python3 -c "from playwright.sync_api import sync_playwright; sync_playwright()" 2>/dev/null; then
+    echo "[di-test] Installing Playwright Chromium browser..."
+    python3 -m playwright install chromium 2>/dev/null || echo "[di-test] WARNING: Playwright browser install failed (non-fatal)."
+else
+    echo "[di-test] Playwright browser already installed."
+fi
+
+# ------------------------------------------------------------------
+# Node.js dependencies (Playwright + axe-core)
+# ------------------------------------------------------------------
+if [ ! -d "$PROJECT_ROOT/node_modules/playwright" ] || [ ! -d "$PROJECT_ROOT/node_modules/axe-core" ]; then
     echo "[di-test] Installing Node.js dependencies..."
     cd "$PROJECT_ROOT" && npm install --silent
 else
@@ -31,7 +46,7 @@ else
 fi
 
 # ------------------------------------------------------------------
-# CWAC installation
+# CWAC installation (optional — fallback mode available without CWAC)
 # ------------------------------------------------------------------
 CWAC_PATH="${CWAC_PATH:-}"
 
@@ -49,25 +64,32 @@ fi
 
 if [ -n "$CWAC_PATH" ] && [ -f "$CWAC_PATH/cwac.py" ]; then
     echo "[di-test] CWAC found at: $CWAC_PATH"
+    echo "[di-test] Full mode available: All audit plugins (axe-core, language, readability, etc.)"
 else
-    echo "[di-test] CWAC not found. Cloning from GitHub..."
+    echo "[di-test] CWAC not found. Attempting to clone from GitHub..."
     mkdir -p "$(dirname "$CWAC_INSTALL_DIR")"
-    git clone --depth 1 https://github.com/GOVTNZ/cwac.git "$CWAC_INSTALL_DIR"
-    CWAC_PATH="$CWAC_INSTALL_DIR"
-    echo "[di-test] CWAC cloned to: $CWAC_PATH"
+    if git clone --depth 1 https://github.com/GOVTNZ/cwac.git "$CWAC_INSTALL_DIR" 2>/dev/null; then
+        CWAC_PATH="$CWAC_INSTALL_DIR"
+        echo "[di-test] CWAC cloned to: $CWAC_PATH"
 
-    # Install CWAC Python dependencies
-    echo "[di-test] Installing CWAC Python dependencies..."
-    pip install -q -r "$CWAC_PATH/requirements.txt"
+        # Install CWAC Python dependencies
+        echo "[di-test] Installing CWAC Python dependencies..."
+        pip install -q -r "$CWAC_PATH/requirements.txt" 2>/dev/null || echo "[di-test] WARNING: CWAC Python deps failed (non-fatal)."
 
-    # Install CWAC Node dependencies + Chrome
-    echo "[di-test] Installing CWAC Node dependencies and Chrome..."
-    cd "$CWAC_PATH" && npm install --silent
+        # Install CWAC Node dependencies + Chrome
+        echo "[di-test] Installing CWAC Node dependencies and Chrome..."
+        cd "$CWAC_PATH" && npm install --silent 2>/dev/null || echo "[di-test] WARNING: CWAC Node deps failed (non-fatal)."
 
-    echo "[di-test] CWAC installation complete."
+        echo "[di-test] CWAC installation complete."
+    else
+        echo "[di-test] WARNING: Could not clone CWAC. Falling back to axe-core only mode."
+        echo "[di-test] Fallback mode: axe-core accessibility scanning via Playwright."
+    fi
 fi
 
 # Export for the MCP server process to discover
-export CWAC_PATH
+if [ -n "$CWAC_PATH" ]; then
+    export CWAC_PATH
+fi
 
 echo "[di-test] Dependency check complete."

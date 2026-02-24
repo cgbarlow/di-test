@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-02-24
+
+### Added
+
+- **Playwright + axe-core fallback mode** — When CWAC's chromedriver is unavailable or incompatible with the host architecture (e.g. ARM64), the scanner automatically falls back to running axe-core directly via Playwright. This enables accessibility scanning on any architecture, including Apple Silicon Macs and ARM-based Codespaces.
+- **Environment detection** — New `environment_check.py` module auto-detects whether CWAC (full suite) or axe-only (fallback) mode should be used. The active mode is reported in all scan responses.
+- **`axe_scanner.py`** — Standalone Playwright + axe-core scanner that injects axe-core JS into pages, collects violations, crawls same-domain links, and writes CSV output in the same column format as CWAC.
+- **`scanner_runner.py`** — Subprocess launcher for the fallback scanner, analogous to `cwac_runner.py`.
+- **ADR-007** — Architecture Decision Record for the Playwright fallback mode.
+- **SPEC-007-A** — Technical specification for the axe-core scanner design.
+- **New test suites** — `test_environment_check.py`, `test_axe_scanner.py`, HTML test fixtures.
+
+### Changed
+
+- **`cwac_mcp/__init__.py`** — Added `PROJECT_ROOT` and `RESULTS_ROOT` exports alongside `CWAC_PATH`.
+- **`cwac_mcp/server.py`** — Routes `cwac_scan` to CWAC or axe-core based on detected mode. All tool responses include `scan_mode`. Report generation works in both modes.
+- **`cwac_mcp/config_builder.py`** — Added `build_axe_config()` for fallback mode (self-contained JSON, no CWAC directories).
+- **`cwac_mcp/result_reader.py`** — `list_scan_results()` searches both CWAC `results/` and project `output/` directories.
+- **`cwac_mcp/scan_registry.py`** — `_discover_results_dir()` searches both CWAC and project output directories.
+- **`cwac_mcp/requirements.txt`** — Added `playwright` dependency.
+- **`package.json`** — Added `axe-core` dependency, version bumped to 0.3.0.
+- **`scripts/install-deps.sh`** — CWAC installation is now optional (warns instead of failing). Added Playwright browser install. Clear messages about available mode.
+- **README.md** — Updated to reflect dual-mode reality (full CWAC on x86-64, axe-only fallback on ARM64).
+- **CONTRIBUTING.md** — Updated architecture section and project structure.
+- **docs/CWAC-MCP.md** — Added fallback mode documentation.
+
 ## [0.2.4] - 2026-02-24
 
 ### Added

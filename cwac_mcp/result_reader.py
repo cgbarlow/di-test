@@ -14,9 +14,10 @@ import os
 from datetime import datetime
 from typing import Optional
 
-from cwac_mcp import CWAC_PATH
+from cwac_mcp import CWAC_PATH, PROJECT_ROOT
 
 _RESULTS_ROOT = os.path.join(CWAC_PATH, "results")
+_OUTPUT_ROOT = os.path.join(PROJECT_ROOT, "output")
 
 
 def read_results(
@@ -129,7 +130,10 @@ def get_summary(results_dir: str) -> dict:
 
 
 def list_scan_results() -> list[dict]:
-    """List all result directories under ``/workspaces/cwac/results/``.
+    """List all result directories under CWAC results/ and project output/.
+
+    Searches both the CWAC results directory and the project output directory
+    for scan result folders.
 
     Returns:
         A list of dicts sorted by ``modified_time`` (most recent first),
@@ -139,23 +143,24 @@ def list_scan_results() -> list[dict]:
         * ``path`` -- absolute path
         * ``modified_time`` -- ISO-8601 formatted modification timestamp
 
-        Returns an empty list if the results root does not exist.
+        Returns an empty list if no results directories exist.
     """
-    if not os.path.isdir(_RESULTS_ROOT):
-        return []
-
     entries: list[dict] = []
-    try:
-        for entry in os.scandir(_RESULTS_ROOT):
-            if entry.is_dir():
-                stat = entry.stat()
-                entries.append({
-                    "name": entry.name,
-                    "path": entry.path,
-                    "modified_time": datetime.fromtimestamp(stat.st_mtime).isoformat(),
-                })
-    except OSError:
-        return []
+
+    for root in (_RESULTS_ROOT, _OUTPUT_ROOT):
+        if not os.path.isdir(root):
+            continue
+        try:
+            for entry in os.scandir(root):
+                if entry.is_dir():
+                    stat = entry.stat()
+                    entries.append({
+                        "name": entry.name,
+                        "path": entry.path,
+                        "modified_time": datetime.fromtimestamp(stat.st_mtime).isoformat(),
+                    })
+        except OSError:
+            continue
 
     entries.sort(key=lambda e: e["modified_time"], reverse=True)
     return entries

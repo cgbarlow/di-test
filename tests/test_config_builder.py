@@ -147,3 +147,97 @@ class TestBuildConfig:
                 config = json.load(f)
             assert config["audit_plugins"]["language_audit"]["enabled"] is False
             assert config["audit_plugins"]["axe_core_audit"]["enabled"] is True
+
+
+class TestBuildAxeConfig:
+    """Tests for build_axe_config (axe-core fallback config)."""
+
+    def test_creates_config_file(self, tmp_path):
+        """Test that build_axe_config creates a valid JSON config."""
+        from cwac_mcp.config_builder import build_axe_config
+
+        with patch("cwac_mcp.config_builder.PROJECT_ROOT", str(tmp_path)):
+            config_path, output_dir = build_axe_config(
+                scan_id="test-axe-uuid",
+                audit_name="axe_test",
+                urls=["https://example.com"],
+            )
+
+            assert os.path.isfile(config_path)
+            with open(config_path) as f:
+                config = json.load(f)
+            assert config["audit_name"] == "axe_test"
+            assert config["urls"] == ["https://example.com"]
+
+    def test_creates_output_dir(self, tmp_path):
+        """Test that build_axe_config creates the output directory."""
+        from cwac_mcp.config_builder import build_axe_config
+
+        with patch("cwac_mcp.config_builder.PROJECT_ROOT", str(tmp_path)):
+            _, output_dir = build_axe_config(
+                scan_id="test-axe-uuid-2",
+                audit_name="dir_test",
+                urls=["https://example.com"],
+            )
+
+            assert os.path.isdir(output_dir)
+
+    def test_default_viewport(self, tmp_path):
+        """Test that default viewport is applied when none specified."""
+        from cwac_mcp.config_builder import build_axe_config
+
+        with patch("cwac_mcp.config_builder.PROJECT_ROOT", str(tmp_path)):
+            config_path, _ = build_axe_config(
+                scan_id="test-axe-uuid-3",
+                audit_name="viewport_test",
+                urls=["https://example.com"],
+            )
+
+            with open(config_path) as f:
+                config = json.load(f)
+            assert "viewport_sizes" in config
+            assert "medium" in config["viewport_sizes"]
+
+    def test_custom_viewport(self, tmp_path):
+        """Test that custom viewport overrides are applied."""
+        from cwac_mcp.config_builder import build_axe_config
+
+        with patch("cwac_mcp.config_builder.PROJECT_ROOT", str(tmp_path)):
+            config_path, _ = build_axe_config(
+                scan_id="test-axe-uuid-4",
+                audit_name="custom_vp",
+                urls=["https://example.com"],
+                viewport_sizes={"small": {"width": 320, "height": 480}},
+            )
+
+            with open(config_path) as f:
+                config = json.load(f)
+            assert config["viewport_sizes"]["small"]["width"] == 320
+
+    def test_empty_urls_raises(self, tmp_path):
+        """Test that empty URLs list raises ValueError."""
+        from cwac_mcp.config_builder import build_axe_config
+
+        with patch("cwac_mcp.config_builder.PROJECT_ROOT", str(tmp_path)):
+            with pytest.raises(ValueError, match="URL"):
+                build_axe_config(
+                    scan_id="test-axe-uuid-5",
+                    audit_name="empty_test",
+                    urls=[],
+                )
+
+    def test_config_includes_axe_core_path(self, tmp_path):
+        """Test that config includes the axe-core JS path."""
+        from cwac_mcp.config_builder import build_axe_config
+
+        with patch("cwac_mcp.config_builder.PROJECT_ROOT", str(tmp_path)):
+            config_path, _ = build_axe_config(
+                scan_id="test-axe-uuid-6",
+                audit_name="path_test",
+                urls=["https://example.com"],
+            )
+
+            with open(config_path) as f:
+                config = json.load(f)
+            assert "axe_core_path" in config
+            assert "axe.min.js" in config["axe_core_path"]

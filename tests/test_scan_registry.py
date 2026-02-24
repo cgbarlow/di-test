@@ -143,3 +143,54 @@ class TestScanRecord:
         )
         assert record.stdout_lines == []
         assert record.stderr_lines == []
+
+
+class TestDiscoverResultsDir:
+    """Tests for _discover_results_dir with dual results root."""
+
+    def test_finds_in_cwac_results(self, tmp_path):
+        """Discovers results in the CWAC results directory."""
+        results_dir = tmp_path / "cwac" / "results" / "2026-02-24_10-00-00_my_scan"
+        results_dir.mkdir(parents=True)
+
+        registry = ScanRegistry()
+        with patch("cwac_mcp.scan_registry.CWAC_PATH", str(tmp_path / "cwac")), \
+             patch("cwac_mcp.scan_registry.PROJECT_ROOT", str(tmp_path / "project")):
+            found = registry._discover_results_dir("my_scan")
+        assert found is not None
+        assert "my_scan" in found
+
+    def test_finds_in_project_output(self, tmp_path):
+        """Discovers results in the project output directory."""
+        output_dir = tmp_path / "project" / "output" / "20260224_100000_my_scan"
+        output_dir.mkdir(parents=True)
+
+        registry = ScanRegistry()
+        with patch("cwac_mcp.scan_registry.CWAC_PATH", str(tmp_path / "cwac")), \
+             patch("cwac_mcp.scan_registry.PROJECT_ROOT", str(tmp_path / "project")):
+            found = registry._discover_results_dir("my_scan")
+        assert found is not None
+        assert "my_scan" in found
+
+    def test_prefers_most_recent(self, tmp_path):
+        """Returns the most recently created matching directory."""
+        import time
+
+        cwac_results = tmp_path / "cwac" / "results"
+        cwac_results.mkdir(parents=True)
+        old = cwac_results / "2026-02-24_08-00-00_my_scan"
+        old.mkdir()
+
+        time.sleep(0.05)
+
+        output_dir = tmp_path / "project" / "output"
+        output_dir.mkdir(parents=True)
+        new = output_dir / "20260224_100000_my_scan"
+        new.mkdir()
+
+        registry = ScanRegistry()
+        with patch("cwac_mcp.scan_registry.CWAC_PATH", str(tmp_path / "cwac")), \
+             patch("cwac_mcp.scan_registry.PROJECT_ROOT", str(tmp_path / "project")):
+            found = registry._discover_results_dir("my_scan")
+        assert found is not None
+        assert "20260224_100000_my_scan" in found

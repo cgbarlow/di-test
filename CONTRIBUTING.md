@@ -43,14 +43,17 @@ di-test/
 ├── .mcp.json                              # MCP server configuration (Playwright + CWAC)
 ├── marketplace.json                       # Plugin marketplace listing
 ├── cwac_mcp/                              # CWAC MCP server
-│   ├── __init__.py                        # Package init, CWAC_PATH discovery
-│   ├── server.py                          # FastMCP server with 6 tool definitions
+│   ├── __init__.py                        # Package init, CWAC_PATH + PROJECT_ROOT discovery
+│   ├── server.py                          # FastMCP server with 6 tools, dual-mode routing
+│   ├── environment_check.py               # Detect scan mode (cwac vs axe-only)
 │   ├── cwac_runner.py                     # Subprocess execution of CWAC
-│   ├── config_builder.py                  # Builds CWAC config JSON from tool params
-│   ├── result_reader.py                   # Reads/parses CWAC result CSVs
+│   ├── axe_scanner.py                     # Standalone Playwright + axe-core scanner
+│   ├── scanner_runner.py                  # Subprocess launcher for axe_scanner
+│   ├── config_builder.py                  # Builds CWAC + axe-core configs from tool params
+│   ├── result_reader.py                   # Reads/parses result CSVs (both modes)
 │   ├── scan_registry.py                   # Tracks active/completed scans in memory
 │   ├── report_generator.py               # Markdown + DOCX report generation
-│   └── requirements.txt                   # Python dependencies
+│   └── requirements.txt                   # Python dependencies (incl. playwright)
 ├── skills/                                # Plugin skill definitions
 │   ├── scan/SKILL.md                      # /di-test:scan
 │   ├── scan-status/SKILL.md               # /di-test:scan-status
@@ -69,10 +72,15 @@ di-test/
 │   └── visual_scan_report.md.j2           # Visual pattern scan report
 ├── tests/                                 # Test suites
 │   ├── *.feature                          # Gherkin scenarios (visual scanner)
+│   ├── fixtures/                          # HTML test fixtures
+│   │   ├── violations.html                # Page with known a11y violations
+│   │   └── no_violations.html             # Clean accessible page
 │   ├── conftest.py                        # Shared pytest fixtures
-│   ├── test_config_builder.py             # Config builder tests
+│   ├── test_environment_check.py          # Environment detection tests
+│   ├── test_axe_scanner.py                # axe-core scanner pure function tests
+│   ├── test_config_builder.py             # Config builder tests (both modes)
 │   ├── test_result_reader.py              # Result reader tests
-│   ├── test_scan_registry.py              # Scan registry tests
+│   ├── test_scan_registry.py              # Scan registry tests (dual results root)
 │   ├── test_plugin_manifest.py            # Plugin manifest validation
 │   ├── test_report_generator.py           # Report generator tests
 │   └── test_report_templates.py           # Template rendering tests
@@ -93,15 +101,26 @@ di-test/
 
 ## Architecture
 
-The platform combines two MCP servers:
+The platform combines two MCP servers with dual-mode scanning:
 
 | Server | What it does | How it works |
 |--------|-------------|--------------|
 | **Playwright MCP** | Visual pattern detection — finds elements that *look like* headings or cards but may lack semantic markup | LLM-driven browser automation using Gherkin test scenarios |
 | **CWAC MCP** | WCAG compliance scanning — runs axe-core, language, reflow, and other accessibility audits | Subprocess wrapper around [GOVTNZ/cwac](https://github.com/GOVTNZ/cwac) |
 
+### Dual-Mode Scanner
+
+The CWAC MCP server supports two scanning modes, selected automatically at startup:
+
+| Mode | Engine | Available when | Audit types |
+|------|--------|---------------|-------------|
+| **Full (`cwac`)** | CWAC subprocess | CWAC + chromedriver + selenium available | All CWAC plugins (axe-core, language, readability, etc.) |
+| **Fallback (`axe-only`)** | Playwright + axe-core | Playwright + axe-core available, CWAC unavailable | axe-core only |
+
+The fallback scanner produces CSV output in the same column format as CWAC, so all downstream tools (result_reader, report_generator, templates) work identically regardless of mode.
+
 For detailed technical documentation:
-- [CWAC MCP Server](docs/CWAC-MCP.md) — architecture, tools, plugins, scan lifecycle
+- [CWAC MCP Server](docs/CWAC-MCP.md) — architecture, tools, plugins, scan lifecycle, fallback mode
 - [Visual Pattern Scanner](docs/VISUAL-SCANNER.md) — analysis pipeline, detection methods, output format
 
 ## Architecture Decision Records (ADRs)
@@ -117,6 +136,7 @@ All architectural decisions are documented using the WH(Y) ADR format:
 | [ADR-004](docs/adr/ADR-004-plugin-architecture.md) | Same-repo Claude Code plugin with marketplace | Zero-friction install + skill discoverability; requires repo access |
 | [ADR-005](docs/adr/ADR-005-report-template-system.md) | Jinja2 + python-docx dual-format reports | Markdown + DOCX from structured data, no pandoc; python-docx adds dependency |
 | [ADR-006](docs/adr/ADR-006-dependency-management.md) | SessionStart hook with CWAC_PATH discovery chain | Auto-install + portable paths; startup latency on first session |
+| [ADR-007](docs/adr/ADR-007-playwright-fallback.md) | Playwright + axe-core fallback mode | Architecture independence + graceful degradation; fewer audit types in fallback |
 
 ## Technical Specifications
 
@@ -129,3 +149,4 @@ All architectural decisions are documented using the WH(Y) ADR format:
 | [SPEC-004-A](docs/specs/SPEC-004-A-manifest-and-skills.md) | Plugin manifest schema, skill definitions, marketplace config | ADR-004 |
 | [SPEC-005-A](docs/specs/SPEC-005-A-template-definitions.md) | Report templates, Jinja2 rendering, DOCX generation, auto-report | ADR-005 |
 | [SPEC-006-A](docs/specs/SPEC-006-A-installation-pipeline.md) | SessionStart hook, install script, CWAC_PATH discovery, verification | ADR-006 |
+| [SPEC-007-A](docs/specs/SPEC-007-A-axe-scanner.md) | axe-core scanner design, CSV mapping, environment check | ADR-007 |

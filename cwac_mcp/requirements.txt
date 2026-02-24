@@ -1,3 +1,4 @@
 mcp[cli]
 python-docx
 jinja2
+playwright

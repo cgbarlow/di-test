@@ -4,6 +4,17 @@ A tool that helps you find accessibility issues on websites. It combines two app
 
 You don't need to be a developer to use it. Install the plugin, point it at a URL, and get a plain-language report of what it finds.
 
+### Scanning Modes
+
+The plugin auto-detects your environment and selects the best available mode:
+
+| Mode | When | What you get |
+|------|------|-------------|
+| **Full (CWAC)** | x86-64 systems with CWAC installed | All audit plugins: axe-core, language, readability, broken links, SEO, and more |
+| **Fallback (axe-core only)** | ARM64 systems or when CWAC is unavailable | axe-core accessibility scanning via Playwright — catches WCAG violations on any architecture |
+
+You'll see which mode is active when you start a scan. No configuration needed.
+
 ## Who Is This For?
 
 - **Accessibility advisors** running audits across government or organisational websites
@@ -85,11 +96,15 @@ Every finding includes a plain-language explanation, the exact CSS selector to l
 
 ## What It Scans
 
-**CWAC scans** check for WCAG compliance issues:
+**CWAC scans** (full mode) check for WCAG compliance issues:
 - Axe-core violations (missing alt text, incorrect list structure, colour contrast)
 - Language readability (Flesch-Kincaid grade levels)
 - Reflow issues (horizontal overflow at 320px viewport)
 - Focus indicator visibility
+
+**axe-core scans** (fallback mode) check for:
+- All axe-core WCAG violations (same engine as CWAC's axe_core_audit plugin)
+- Works on any architecture via Playwright
 
 **Visual pattern scans** catch things automated tools miss:
 - Text that looks like a heading but isn't marked up as one

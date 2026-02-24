@@ -13,7 +13,7 @@ from datetime import datetime
 from subprocess import Popen
 from typing import Optional
 
-from cwac_mcp import CWAC_PATH
+from cwac_mcp import CWAC_PATH, PROJECT_ROOT
 
 
 @dataclass
@@ -211,33 +211,37 @@ class ScanRegistry:
 
     @staticmethod
     def _discover_results_dir(audit_name: str) -> Optional[str]:
-        """Find the CWAC results directory that matches *audit_name*.
+        """Find the results directory that matches *audit_name*.
 
-        CWAC prepends a timestamp to the audit_name when it creates the
-        results folder, e.g. ``2026-02-24_14-30-00_my_audit``.  We look for
-        the most recently created directory whose name ends with
-        ``_{audit_name}``.
+        Searches both CWAC results (``{CWAC_PATH}/results/``) and fallback
+        output (``{PROJECT_ROOT}/output/``) for directories whose name ends
+        with ``_{audit_name}``. Returns the most recently created match.
 
         Args:
-            audit_name: The raw audit_name (without the CWAC timestamp).
+            audit_name: The raw audit_name (without the timestamp prefix).
 
         Returns:
             The full path to the matching results directory, or None if no
             match is found.
         """
-        results_root = os.path.join(CWAC_PATH, "results")
-        if not os.path.isdir(results_root):
-            return None
-
         suffix = f"_{audit_name}"
         candidates: list[tuple[float, str]] = []
 
-        try:
-            for entry in os.scandir(results_root):
-                if entry.is_dir() and entry.name.endswith(suffix):
-                    candidates.append((entry.stat().st_ctime, entry.path))
-        except OSError:
-            return None
+        # Search both CWAC results and project output directories.
+        results_roots = [
+            os.path.join(CWAC_PATH, "results"),
+            os.path.join(PROJECT_ROOT, "output"),
+        ]
+
+        for results_root in results_roots:
+            if not os.path.isdir(results_root):
+                continue
+            try:
+                for entry in os.scandir(results_root):
+                    if entry.is_dir() and entry.name.endswith(suffix):
+                        candidates.append((entry.stat().st_ctime, entry.path))
+            except OSError:
+                continue
 
         if not candidates:
             return None

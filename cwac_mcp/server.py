@@ -4,6 +4,10 @@ This module defines a FastMCP server with six tools that allow an LLM to
 launch CWAC accessibility scans, monitor their progress, read results,
 and generate reports.
 
+Supports two modes:
+- "cwac" (full suite): Uses CWAC subprocess for all audit plugins
+- "axe-only" (fallback): Uses Playwright + axe-core when CWAC is unavailable
+
 Usage:
     python -m cwac_mcp.server
     # or
@@ -15,10 +19,18 @@ from datetime import datetime
 
 from mcp.server.fastmcp import FastMCP
 
-from cwac_mcp.config_builder import build_config
+from cwac_mcp.config_builder import build_config, build_axe_config
 from cwac_mcp.cwac_runner import start_cwac, start_report_export
+from cwac_mcp.environment_check import check_environment
 from cwac_mcp.result_reader import get_summary, list_scan_results, read_results
 from cwac_mcp.scan_registry import ScanRegistry
+
+# ---------------------------------------------------------------------------
+# Environment detection
+# ---------------------------------------------------------------------------
+
+_env = check_environment()
+SCAN_MODE = _env["mode"]
 
 # ---------------------------------------------------------------------------
 # Global instances
@@ -58,6 +70,8 @@ def cwac_scan(
             Available plugin keys include: axe_core_audit, language_audit,
             readability_audit, broken_link_audit, spell_check_audit,
             seo_audit, meta_audit, link_text_audit, colour_contrast_audit.
+            Note: In axe-only fallback mode, plugin toggles are ignored
+            (only axe-core runs).
         max_links_per_domain: Maximum number of pages to crawl per domain.
             If not set, the CWAC default is used.
         viewport_sizes: Optional viewport size overrides as a dict mapping
@@ -68,44 +82,67 @@ def cwac_scan(
         A dict with "scan_id" and "status" on success, or "error" on failure.
     """
     try:
-        # Build config and base_urls files on disk.
-        # We need a scan_id first for the config filename, but we also need
-        # the process for registry.create().  Use a temporary UUID for the
-        # config filename, then register with the same id.
         import uuid
 
         scan_id = str(uuid.uuid4())
-        config_filename, base_urls_dir = build_config(
-            scan_id=scan_id,
-            audit_name=audit_name,
-            urls=urls,
-            plugins=plugins,
-            max_links_per_domain=max_links_per_domain,
-            viewport_sizes=viewport_sizes,
-        )
 
-        # Launch CWAC subprocess.
-        process = start_cwac(config_filename)
+        if SCAN_MODE == "cwac":
+            # Full CWAC mode: build CWAC config and launch CWAC subprocess.
+            config_filename, base_urls_dir = build_config(
+                scan_id=scan_id,
+                audit_name=audit_name,
+                urls=urls,
+                plugins=plugins,
+                max_links_per_domain=max_links_per_domain,
+                viewport_sizes=viewport_sizes,
+            )
+            process = start_cwac(config_filename)
 
-        # Register with the same scan_id used for config filenames.
-        from cwac_mcp.scan_registry import ScanRecord
+            from cwac_mcp.scan_registry import ScanRecord
 
-        record = ScanRecord(
-            process=process,
-            config_path=config_filename,
-            base_urls_dir=base_urls_dir,
-            results_dir=None,
-            status="running",
-            start_time=datetime.now(),
-            end_time=None,
-            audit_name=audit_name,
-        )
+            record = ScanRecord(
+                process=process,
+                config_path=config_filename,
+                base_urls_dir=base_urls_dir,
+                results_dir=None,
+                status="running",
+                start_time=datetime.now(),
+                end_time=None,
+                audit_name=audit_name,
+            )
+        else:
+            # Fallback axe-only mode: build axe config and launch scanner.
+            from cwac_mcp.scanner_runner import start_scanner
+
+            config_path, output_dir = build_axe_config(
+                scan_id=scan_id,
+                audit_name=audit_name,
+                urls=urls,
+                max_links_per_domain=max_links_per_domain,
+                viewport_sizes=viewport_sizes,
+            )
+            process = start_scanner(config_path)
+
+            from cwac_mcp.scan_registry import ScanRecord
+
+            record = ScanRecord(
+                process=process,
+                config_path=config_path,
+                base_urls_dir="",  # No base_urls dir in fallback mode
+                results_dir=output_dir,  # Known upfront in fallback mode
+                status="running",
+                start_time=datetime.now(),
+                end_time=None,
+                audit_name=audit_name,
+            )
+
         registry.register(scan_id, record)
 
         return {
             "scan_id": scan_id,
             "status": "running",
-            "message": f"Scan started for {len(urls)} URL(s) with audit name '{audit_name}'.",
+            "scan_mode": SCAN_MODE,
+            "message": f"Scan started for {len(urls)} URL(s) with audit name '{audit_name}' ({SCAN_MODE} mode).",
         }
     except Exception as exc:
         return {"error": str(exc)}
@@ -140,6 +177,7 @@ def cwac_scan_status(scan_id: str) -> dict:
         result: dict = {
             "scan_id": scan_id,
             "status": record.status,
+            "scan_mode": SCAN_MODE,
             "elapsed_seconds": elapsed_seconds,
             "start_time": record.start_time.isoformat(),
         }
@@ -225,6 +263,7 @@ def cwac_get_results(
 
         return {
             "scan_id": scan_id,
+            "scan_mode": SCAN_MODE,
             "results_dir": record.results_dir,
             "count": len(results),
             "results": results,
@@ -275,6 +314,7 @@ def cwac_get_summary(scan_id: str) -> dict:
 
         summary = get_summary(record.results_dir)
         summary["scan_id"] = scan_id
+        summary["scan_mode"] = SCAN_MODE
         summary["results_dir"] = record.results_dir
 
         return summary
@@ -288,8 +328,8 @@ def cwac_list_scans() -> dict:
 
     Returns both actively tracked scans from this session and any
     historical result directories found on disk under the CWAC results
-    folder. Useful for discovering past scans whose results can still
-    be queried.
+    folder and the project output folder. Useful for discovering past
+    scans whose results can still be queried.
 
     Returns:
         A dict with "active_scans" (scans tracked in this session)
@@ -314,6 +354,7 @@ def cwac_list_scans() -> dict:
         result_dirs = list_scan_results()
 
         return {
+            "scan_mode": SCAN_MODE,
             "active_scans": active,
             "result_directories": result_dirs,
         }
@@ -323,11 +364,10 @@ def cwac_list_scans() -> dict:
 
 @mcp.tool()
 def cwac_generate_report(scan_id: str) -> dict:
-    """Generate an HTML/JSON export report for a completed scan.
+    """Generate a report for a completed scan.
 
-    Runs CWAC's export_report_data.py script on the scan's results
-    directory to produce report files. This operation blocks until
-    the report generation completes (typically a few seconds).
+    In CWAC mode, runs CWAC's export_report_data.py script. In axe-only
+    fallback mode, generates a Markdown + DOCX report from the CSV results.
 
     Args:
         scan_id: The unique identifier returned by cwac_scan.
@@ -361,38 +401,73 @@ def cwac_generate_report(scan_id: str) -> dict:
         if not record.results_dir:
             return {"error": "Scan completed but no results directory was found."}
 
-        # Extract just the folder name from the full results path.
-        results_folder_name = os.path.basename(record.results_dir)
+        if SCAN_MODE == "cwac":
+            # CWAC mode: use CWAC's export script.
+            results_folder_name = os.path.basename(record.results_dir)
+            process = start_report_export(results_folder_name)
+            stdout, stderr = process.communicate(timeout=300)
 
-        # Run export_report_data.py synchronously (it's typically quick).
-        process = start_report_export(results_folder_name)
-        stdout, stderr = process.communicate(timeout=300)
+            if process.returncode != 0:
+                return {
+                    "error": "Report generation failed.",
+                    "return_code": process.returncode,
+                    "stderr": stderr.strip() if stderr else None,
+                    "stdout": stdout.strip() if stdout else None,
+                }
 
-        if process.returncode != 0:
+            from cwac_mcp import CWAC_PATH
+
+            reports_dir = os.path.join(CWAC_PATH, "reports", results_folder_name)
+            report_files: list[str] = []
+            if os.path.isdir(reports_dir):
+                for entry in os.scandir(reports_dir):
+                    if entry.is_file():
+                        report_files.append(entry.path)
+
             return {
-                "error": "Report generation failed.",
-                "return_code": process.returncode,
-                "stderr": stderr.strip() if stderr else None,
+                "scan_id": scan_id,
+                "scan_mode": SCAN_MODE,
+                "results_dir": record.results_dir,
+                "report_files": sorted(report_files),
                 "stdout": stdout.strip() if stdout else None,
+                "message": "Report generated successfully.",
+            }
+        else:
+            # Fallback mode: generate reports from CSV using report_generator.
+            from cwac_mcp.report_generator import generate_reports
+
+            summary = get_summary(record.results_dir)
+            results = read_results(record.results_dir)
+
+            context = {
+                "audit_name": record.audit_name,
+                "scan_date": record.start_time.isoformat(),
+                "base_url": results[0]["base_url"] if results else "Unknown",
+                "pages_scanned": len(set(r.get("url", "") for r in results)),
+                "total_issues": summary.get("total_issues", 0),
+                "summary": summary,
+                "results": results,
+                "generated_at": datetime.now().isoformat(),
+                "scan_mode": SCAN_MODE,
             }
 
-        # CWAC writes reports to ./reports/{folder_name}/ (relative to CWAC_PATH).
-        from cwac_mcp import CWAC_PATH
+            output_dir = record.results_dir
+            reports = generate_reports(
+                template_name="cwac_scan_report",
+                context=context,
+                output_dir=output_dir,
+                audit_name=record.audit_name,
+            )
 
-        reports_dir = os.path.join(CWAC_PATH, "reports", results_folder_name)
-        report_files: list[str] = []
-        if os.path.isdir(reports_dir):
-            for entry in os.scandir(reports_dir):
-                if entry.is_file():
-                    report_files.append(entry.path)
+            report_files = [v for v in reports.values() if v]
 
-        return {
-            "scan_id": scan_id,
-            "results_dir": record.results_dir,
-            "report_files": sorted(report_files),
-            "stdout": stdout.strip() if stdout else None,
-            "message": "Report generated successfully.",
-        }
+            return {
+                "scan_id": scan_id,
+                "scan_mode": SCAN_MODE,
+                "results_dir": record.results_dir,
+                "report_files": report_files,
+                "message": "Report generated successfully (axe-only mode).",
+            }
     except TimeoutError:
         return {"error": "Report generation timed out after 300 seconds."}
     except Exception as exc:

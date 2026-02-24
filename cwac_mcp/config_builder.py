@@ -9,9 +9,10 @@ paths so a scan can be launched.
 import json
 import os
 import re
+from datetime import datetime
 from typing import Optional
 
-from cwac_mcp import CWAC_PATH
+from cwac_mcp import CWAC_PATH, PROJECT_ROOT
 
 # Paths relative to CWAC_PATH.
 _DEFAULT_CONFIG = os.path.join(CWAC_PATH, "config", "config_default.json")
@@ -158,3 +159,66 @@ def build_config(
             fh.write(f"MCP Scan,{escaped_url},MCP\n")
 
     return config_filename, base_urls_dir
+
+
+def build_axe_config(
+    scan_id: str,
+    audit_name: str,
+    urls: list[str],
+    max_links_per_domain: Optional[int] = None,
+    viewport_sizes: Optional[dict[str, dict[str, int]]] = None,
+) -> tuple[str, str]:
+    """Build a config for the axe-core fallback scanner.
+
+    Unlike build_config(), this does NOT read CWAC's config_default.json or
+    write to CWAC directories. It creates a self-contained JSON config and
+    a timestamped output directory under the project root.
+
+    Args:
+        scan_id: Unique identifier for this scan.
+        audit_name: Human-readable name for the audit.
+        urls: List of URLs to scan.
+        max_links_per_domain: Max pages to crawl per domain (default 10).
+        viewport_sizes: Viewport overrides. Defaults to medium (1280x800).
+
+    Returns:
+        A tuple of (config_path, output_dir) as absolute paths.
+
+    Raises:
+        ValueError: If urls is empty.
+    """
+    if not urls:
+        raise ValueError("At least one URL must be provided")
+
+    safe_name = _sanitize_audit_name(audit_name)
+    if not safe_name:
+        raise ValueError("audit_name is empty after sanitization")
+
+    # Create timestamped output directory.
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    output_dir_name = f"{timestamp}_{safe_name}"
+    output_dir = os.path.join(PROJECT_ROOT, "output", output_dir_name)
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Default viewports if none provided.
+    if viewport_sizes is None:
+        viewport_sizes = {"medium": {"width": 1280, "height": 800}}
+
+    # axe-core JS path.
+    axe_core_path = os.path.join(PROJECT_ROOT, "node_modules", "axe-core", "axe.min.js")
+
+    config = {
+        "audit_name": safe_name,
+        "urls": urls,
+        "max_links_per_domain": max_links_per_domain or 10,
+        "viewport_sizes": viewport_sizes,
+        "output_dir": output_dir,
+        "axe_core_path": axe_core_path,
+    }
+
+    # Write config JSON to output directory.
+    config_path = os.path.join(output_dir, f"config_{scan_id}.json")
+    with open(config_path, "w", encoding="utf-8") as fh:
+        json.dump(config, fh, indent=4)
+
+    return config_path, output_dir

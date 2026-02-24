@@ -102,3 +102,59 @@ Scans are non-blocking: `cwac_scan` returns immediately with a scan ID, and you 
 4. The scan registry tracks progress via subprocess polling
 5. Results are read from CWAC's CSV output files
 6. Summaries and reports are generated on demand
+
+## Fallback Mode (axe-core only)
+
+When CWAC's chromedriver is unavailable or incompatible with the host architecture (e.g. ARM64 / Apple Silicon), the server automatically falls back to running axe-core directly via Playwright.
+
+### How It Works
+
+At server startup, `environment_check.py` probes for CWAC dependencies:
+- If CWAC + chromedriver + selenium are available → **Full mode (`cwac`)**
+- If Playwright + axe-core are available → **Fallback mode (`axe-only`)**
+
+### Architecture (Fallback Mode)
+
+```
+Claude Code
+    |
+    v
++----------------+     +----------------+     +------------------+
+|  CWAC MCP      |---->|  Scanner       |---->|  axe_scanner.py  |
+|  Server        |     |  Runner        |     |  (Playwright +   |
+|  (FastMCP)     |     |                |     |   axe-core)      |
++----------------+     +----------------+     +------------------+
+    |                                              |
+    v                                              v
++----------------+                        +------------------+
+| Scan Registry  |                        | axe_core_audit   |
+| (in-memory)    |                        | .csv (same       |
++----------------+                        | format as CWAC)  |
+    |                                     +------------------+
+    v                                              |
++----------------+                                 v
+|Config Builder  |                        +------------------+
+| (axe config)   |                        |Result Reader     |
++----------------+                        | (CSV parser)     |
+                                          +------------------+
+```
+
+### What's Different
+
+| Aspect | Full mode (CWAC) | Fallback mode (axe-only) |
+|--------|-----------------|------------------------|
+| Engine | CWAC subprocess | Playwright + axe-core |
+| Audit types | All CWAC plugins | axe-core only |
+| Architecture | x86-64 only | Any (ARM64, x86-64, etc.) |
+| Results directory | `{CWAC_PATH}/results/` | `{PROJECT_ROOT}/output/` |
+| CSV format | CWAC's 20-column format | Same 20-column format |
+| Downstream tools | All work | All work (identical CSV) |
+
+### What's the Same
+
+- All 6 MCP tools work identically
+- Tool responses include `scan_mode` so you know which engine ran
+- CSV output format is identical (result_reader, report_generator, templates all work)
+- Scan lifecycle (initiate → monitor → retrieve → report) is unchanged
+
+See [ADR-007](adr/ADR-007-playwright-fallback.md) for the decision rationale and [SPEC-007-A](specs/SPEC-007-A-axe-scanner.md) for the technical specification.
