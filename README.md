@@ -42,7 +42,7 @@ These principles guide everything the tool does:
 
 1. In a Claude Code session:
    ```
-   /plugin marketplace add cgbarlow/di-test
+   /plugin marketplace add https://github.com/cgbarlow/di-test
    /plugin install di-test@di-test-marketplace
    ```
 2. Start scanning with the same commands as above.
