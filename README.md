@@ -64,7 +64,7 @@ These principles guide everything the tool does:
 
 Dependencies are installed automatically. You never need to run `pip install` or `npm install` manually.
 
-> For manual setup without the plugin system, see [CONTRIBUTING.md](CONTRIBUTING.md#development-setup).
+> For manual setup without the plugin system, see [Manual Setup](docs/MANUAL-SETUP.md).
 
 ---
 
@@ -143,4 +143,4 @@ This project is licensed under [CC-BY-SA-4.0](LICENSE) (Creative Commons Attribu
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, project structure, architecture decisions, and technical specifications.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for how to get involved, [Architecture](docs/ARCHITECTURE.md) for project structure and design decisions, and [Manual Setup](docs/MANUAL-SETUP.md) for development environment setup.

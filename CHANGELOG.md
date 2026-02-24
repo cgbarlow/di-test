@@ -27,8 +27,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`cwac_mcp/requirements.txt`** — Added `playwright` dependency.
 - **`package.json`** — Added `axe-core` dependency, version bumped to 0.3.0.
 - **`scripts/install-deps.sh`** — CWAC installation is now optional (warns instead of failing). Added Playwright browser install. Clear messages about available mode.
-- **README.md** — Updated to reflect dual-mode reality (full CWAC on x86-64, axe-only fallback on ARM64).
-- **CONTRIBUTING.md** — Updated architecture section and project structure.
+- **README.md** — Updated to reflect dual-mode reality (full CWAC on x86-64, axe-only fallback on ARM64). References new Manual Setup and Architecture docs.
+- **CONTRIBUTING.md** — Slimmed down; manual setup moved to `docs/MANUAL-SETUP.md`, architecture moved to `docs/ARCHITECTURE.md`.
+- **docs/ARCHITECTURE.md** — New file: architecture overview, dual-mode scanner, project structure, ADR and SPEC tables.
+- **docs/MANUAL-SETUP.md** — New file: development setup instructions without the plugin system.
 - **docs/CWAC-MCP.md** — Added fallback mode documentation.
 
 ## [0.2.4] - 2026-02-24
