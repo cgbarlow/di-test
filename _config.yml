@@ -1,0 +1,19 @@
+theme: jekyll-theme-primer
+exclude:
+  - templates/
+  - cwac_mcp/
+  - scripts/
+  - hooks/
+  - skills/
+  - tests/
+  - node_modules/
+  - output/
+  - "*.py"
+  - "*.j2"
+  - "*.feature"
+  - requirements.txt
+  - package.json
+  - package-lock.json
+  - .mcp.json
+  - .claude-plugin/
+  - .campaign/
