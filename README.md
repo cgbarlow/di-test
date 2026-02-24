@@ -213,6 +213,34 @@ A complete scan has been run against the [FinCap Our Team page](https://www.finc
 
 Key findings: 19 heading-like candidates (team member names using `<p class="h3">` instead of `<h3>`), 19 card-like candidates (repeated `<article>` structures), a link mismatch, and an empty `<h2>`.
 
+---
+
+## CWAC Scan Reports
+
+### MSD (Ministry of Social Development) — msd.govt.nz
+
+A CWAC scan was run against [msd.govt.nz](https://msd.govt.nz) on 2026-02-24, crawling 50 pages with axe-core, language, and reflow audits enabled.
+
+| Metric | Value |
+|--------|-------|
+| Pages scanned | 50 |
+| Axe-core issues | 27 (3 critical, 24 serious) |
+| Language audit | All pages analysed (Flesch-Kincaid grade levels recorded) |
+| Reflow audit | 0 overflow issues |
+
+**Top axe-core findings:**
+
+| Impact | Rule | Description | Count |
+|--------|------|-------------|-------|
+| Critical | `image-alt` | `<img>` elements missing alternative text | 3 |
+| Serious | `list` | Lists not structured correctly | 24 |
+
+Scan results are stored at `/workspaces/cwac/results/2026-02-24_04-26-15_msd_govt_nz/`.
+
+### FinCap — fincap.org.nz
+
+See the [FinCap scan report](output/accessibility-scan-report.md) above for the visual pattern scan of the Our Team page.
+
 ### Output Format
 
 Each finding includes:
@@ -250,7 +278,6 @@ Each finding includes:
 ```
 di-test/
 ├── .mcp.json                              # MCP server configuration (Playwright + CWAC)
-├── di-web-accessibility-spec.md           # Visual scanner specification
 ├── cwac_mcp/                              # CWAC MCP server
 │   ├── __init__.py                        # Package init, CWAC_PATH constant
 │   ├── server.py                          # FastMCP server with 6 tool definitions
@@ -261,10 +288,12 @@ di-test/
 │   └── requirements.txt                   # Python dependencies (mcp[cli])
 ├── docs/
 │   ├── adr/                               # Architecture Decision Records
+│   │   ├── ADR-000-visual-pattern-scanner.md
 │   │   ├── ADR-001-cwac-mcp-integration-approach.md
 │   │   ├── ADR-002-subprocess-vs-direct-import.md
 │   │   └── ADR-003-scan-lifecycle-management.md
 │   └── specs/                             # Technical Specifications
+│       ├── SPEC-000-A-visual-pattern-scanner.md
 │       ├── SPEC-001-A-mcp-tool-definitions.md
 │       ├── SPEC-002-A-subprocess-execution-model.md
 │       └── SPEC-003-A-scan-registry-design.md
@@ -290,6 +319,7 @@ All architectural decisions are documented using the WH(Y) ADR format:
 
 | ADR | Decision | Key Trade-off |
 |-----|----------|---------------|
+| [ADR-000](docs/adr/ADR-000-visual-pattern-scanner.md) | LLM-driven visual pattern detection via Playwright MCP | Catches non-semantic patterns automated tools miss; AI-dependent, flags not violations |
 | [ADR-001](docs/adr/ADR-001-cwac-mcp-integration-approach.md) | MCP server wrapper for CWAC integration | MCP provides structured tools + Claude Code integration; requires additional server process |
 | [ADR-002](docs/adr/ADR-002-subprocess-vs-direct-import.md) | Subprocess execution instead of direct Python import | Zero CWAC modifications + update compatibility; subprocess overhead + temp file management |
 | [ADR-003](docs/adr/ADR-003-scan-lifecycle-management.md) | Async scan model with in-memory registry | Non-blocking scans + concurrent support; state lost on server restart |
@@ -298,6 +328,7 @@ All architectural decisions are documented using the WH(Y) ADR format:
 
 | Spec | Covers | Parent ADR |
 |------|--------|-----------|
+| [SPEC-000-A](docs/specs/SPEC-000-A-visual-pattern-scanner.md) | Visual pattern detection: heading-like and card-like content analysis pipeline | ADR-000 |
 | [SPEC-001-A](docs/specs/SPEC-001-A-mcp-tool-definitions.md) | All 6 MCP tool definitions with parameters, return values, and behaviour | ADR-001 |
 | [SPEC-002-A](docs/specs/SPEC-002-A-subprocess-execution-model.md) | Subprocess invocation, config generation, process monitoring, cleanup | ADR-002 |
 | [SPEC-003-A](docs/specs/SPEC-003-A-scan-registry-design.md) | Scan registry data structure, state transitions, thread safety | ADR-003 |

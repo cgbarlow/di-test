@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1] - 2026-02-24
+
+### Added
+
+- **MSD scan report** — Added CWAC scan results for msd.govt.nz (50 pages, 3 critical + 24 serious axe-core issues) to README.
+- **ADR-000** — Architecture Decision Record for the visual pattern scanner (predates CWAC work).
+- **SPEC-000-A** — Technical specification for visual pattern detection pipeline, reformatted from original `di-web-accessibility-spec.md`.
+
+### Changed
+
+- **`di-web-accessibility-spec.md`** — Renamed and reformatted to `docs/specs/SPEC-000-A-visual-pattern-scanner.md` with metadata table, numbered sections, and SPEC template structure.
+- **`README.md`** — Added CWAC Scan Reports section with MSD results, updated project structure and documentation tables to include ADR-000 and SPEC-000-A.
+
 ## [0.1.0] - 2026-02-24
 
 ### Added
