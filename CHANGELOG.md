@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.2] - 2026-02-24
+
+### Fixed
+
+- **Plugin structure** — Moved `marketplace.json` into `.claude-plugin/` with proper marketplace schema (plugins array, owner, source URL). Previously at repo root with flat format.
+- **hooks.json format** — Corrected from array-with-event-fields to the plugin system's expected schema (event names as object keys with nested hooks arrays).
+- **MCP server path** — Replaced hardcoded `/workspaces/di-test/` path in `.mcp.json` with `${CLAUDE_PLUGIN_ROOT}` so CWAC server resolves correctly when installed from plugin cache.
+- **plugin.json simplified** — Removed explicit skills, hooks, mcpServers declarations. Plugin system auto-discovers from `skills/`, `hooks/hooks.json`, and `.mcp.json`.
+
 ## [0.2.1] - 2026-02-24
 
 ### Added
