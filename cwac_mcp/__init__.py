@@ -9,7 +9,8 @@ def _discover_cwac_path() -> str:
     Discovery chain:
     1. CWAC_PATH environment variable
     2. Sibling directory (../cwac relative to this project)
-    3. Default fallback: /workspaces/cwac
+    3. /workspaces/cwac (Codespace default)
+    4. ~/.local/share/di-test/cwac (plugin auto-install location)
 
     Returns:
         Absolute path to the CWAC installation directory.
@@ -25,7 +26,16 @@ def _discover_cwac_path() -> str:
     if os.path.isdir(sibling_path) and os.path.isfile(os.path.join(sibling_path, "cwac.py")):
         return os.path.abspath(sibling_path)
 
-    # 3. Default fallback
+    # 3. Codespace default
+    if os.path.isdir("/workspaces/cwac") and os.path.isfile("/workspaces/cwac/cwac.py"):
+        return "/workspaces/cwac"
+
+    # 4. Plugin auto-install location
+    plugin_install = os.path.join(os.path.expanduser("~"), ".local", "share", "di-test", "cwac")
+    if os.path.isdir(plugin_install) and os.path.isfile(os.path.join(plugin_install, "cwac.py")):
+        return os.path.abspath(plugin_install)
+
+    # Fallback (will fail at runtime with a clear error)
     return "/workspaces/cwac"
 
 
