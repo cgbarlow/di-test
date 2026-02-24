@@ -278,7 +278,14 @@ A CWAC scan was run against [msd.govt.nz](https://msd.govt.nz) on 2026-02-24, cr
 | Critical | `image-alt` | `<img>` elements missing alternative text | 3 |
 | Serious | `list` | Lists not structured correctly | 24 |
 
-Scan results are stored at `/workspaces/cwac/results/2026-02-24_04-26-15_msd_govt_nz/`.
+**Scan result files:**
+
+| File | Description |
+|------|-------------|
+| [Axe-Core Audit](output/msd-govt-nz-2026-02-24/axe_core_audit.csv) | All axe-core findings across 50 pages |
+| [Language Audit](output/msd-govt-nz-2026-02-24/language_audit.csv) | Flesch-Kincaid and SMOG readability scores |
+| [Reflow Audit](output/msd-govt-nz-2026-02-24/reflow_audit.csv) | Horizontal overflow checks at 320px |
+| [Pages Scanned](output/msd-govt-nz-2026-02-24/pages_scanned.csv) | List of all 50 pages crawled |
 
 ### FinCap — fincap.org.nz
 
