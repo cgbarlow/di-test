@@ -10,8 +10,8 @@ The plugin auto-detects your environment and selects the best available mode:
 
 | Mode | When | What you get |
 |------|------|-------------|
-| **Full (CWAC)** | x86-64 systems with CWAC installed | All audit plugins: axe-core, language, readability, broken links, SEO, and more |
-| **Fallback (axe-core only)** | ARM64 systems or when CWAC is unavailable | axe-core accessibility scanning via Playwright — catches WCAG violations on any architecture |
+| **Full (Visual patterns + complete CWAC suite)** | x86-64 systems with CWAC installed | All audit plugins: axe-core, language, readability, broken links, SEO, and more |
+| **Fallback (Visual patterns + axe-core)** | ARM64 systems or when CWAC is unavailable | axe-core accessibility scanning via Playwright — catches WCAG violations on any architecture |
 
 You'll see which mode is active when you start a scan. No configuration needed.
 
@@ -38,6 +38,8 @@ These principles guide everything the tool does:
 
 ### Claude Desktop (Cowork or Code tab)
 
+* Uses Fallback mode: Visual patterns + axe-core, no CWAC.*
+
 1. Select **+** then **Plugins** then **Add plugin**
 2. Select the **By Anthropic** dropdown, then **Add marketplace from GitHub** and enter:
    ```
@@ -51,6 +53,8 @@ These principles guide everything the tool does:
 
 ### Claude Code (CLI)
 
+* Mode used depends on environment, x86-64 system required for full CWAC suite.*
+  
 1. In a Claude Code session:
    ```
    /plugin marketplace add https://github.com/cgbarlow/di-test
