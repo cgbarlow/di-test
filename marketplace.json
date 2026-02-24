@@ -2,7 +2,7 @@
   "name": "di-test",
   "displayName": "DI Accessibility Testing Platform",
   "description": "Comprehensive accessibility testing combining CWAC WCAG compliance scanning with LLM-driven visual pattern detection. Scan websites for axe-core violations, language readability, reflow issues, and visually misleading heading/card patterns.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Chris Barlow",
   "source": ".",
   "keywords": ["accessibility", "wcag", "a11y", "testing", "cwac", "axe-core"],

@@ -1,6 +1,6 @@
 {
   "name": "di-test",
-  "version": "1.0.0",
+  "version": "0.2.1",
   "description": "A tool that scans webpages and detects visual patterns (headings, cards) that may need accessibility review. It complements CWAC scans by flagging elements that *look like* headings or cards but may lack proper semantic markup.",
   "main": "index.js",
   "directories": {

@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] - 2026-02-24
+
+### Added
+
+- **LICENSE** — Added CC-BY-SA-4.0 licence file.
+- **CONTRIBUTING.md** — Developer guide with project structure, architecture overview, ADR/SPEC tables, and development setup. Technical content previously in README relocated here.
+- **docs/CWAC-MCP.md** — CWAC MCP server technical reference (architecture, tools, plugins, scan lifecycle).
+- **docs/VISUAL-SCANNER.md** — Visual pattern scanner technical reference (pipeline, detection methods, output format, test scenarios).
+- **docs/EXAMPLES.md** — Example scan results (FinCap visual scan, MSD CWAC scan) with sample output.
+- **Acknowledgements** — Credited Di Drayton as instigator and accessibility SME, and the DIA Web Standards team as CWAC creators.
+
+### Changed
+
+- **README.md** — Major restructure for non-technical audiences (accessibility staff, web content managers). Reduced from 444 to ~130 lines. Added "Who Is This For?" and "Our Approach" sections. Moved technical content (architecture, MCP tools, project structure, ADR/SPEC tables) to CONTRIBUTING.md and docs/. Added licence and contributing sections.
+- **Version alignment** — `plugin.json`, `marketplace.json`, and `package.json` all now report 0.2.1 (previously `package.json` was 1.0.0 while plugin was 0.2.0).
+
 ## [0.2.0] - 2026-02-24
 
 ### Added
