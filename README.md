@@ -55,6 +55,8 @@ Dependencies are installed automatically. You never need to run `pip install` or
 
 ## Available Commands
 
+You can use these commands, but you don't have to. You can simply ask in natural language and the AI will understand your intent and a suitable command will be used.
+
 | Command | What it does |
 |---------|-------------|
 | `/di-test:scan` | Run an accessibility scan against one or more URLs |
