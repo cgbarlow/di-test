@@ -1,0 +1,43 @@
+# Visual Pattern Scan Report
+
+**URL:** {{ url }}
+**Date:** {{ scan_date }}
+**Total Findings:** {{ total_findings | default(0) }}
+
+---
+
+{% if findings %}
+## Findings
+
+{% for finding in findings %}
+### Finding {{ loop.index }}: {{ finding.type }}
+
+- **Reason:** {{ finding.reason }}
+{% if finding.location %}
+- **CSS Selector:** `{{ finding.location.cssSelector }}`
+{% if finding.location.xpath %}
+- **XPath:** `{{ finding.location.xpath }}`
+{% endif %}
+{% endif %}
+{% if finding.visual %}
+- **Font Size:** {{ finding.visual.fontSize | default("N/A") }}
+- **Font Weight:** {{ finding.visual.fontWeight | default("N/A") }}
+{% endif %}
+{% if finding.htmlSnippet %}
+- **HTML:** `{{ finding.htmlSnippet }}`
+{% endif %}
+{% if finding.confidence is not none %}
+- **Confidence:** {{ finding.confidence }}
+{% endif %}
+{% if finding.screenshot %}
+- **Screenshot:** {{ finding.screenshot }}
+{% endif %}
+
+{% endfor %}
+{% else %}
+No visual accessibility patterns were detected on this page.
+{% endif %}
+
+---
+
+*Generated: {{ generated_at | default("N/A") }}*

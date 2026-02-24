@@ -1,0 +1,32 @@
+{
+  "name": "di-test",
+  "version": "0.2.0",
+  "description": "Accessibility testing platform combining visual pattern detection with WCAG compliance scanning via CWAC and Playwright MCP servers.",
+  "author": "Chris Barlow",
+  "skills": [
+    {"name": "scan", "path": "../skills/scan/SKILL.md"},
+    {"name": "scan-status", "path": "../skills/scan-status/SKILL.md"},
+    {"name": "results", "path": "../skills/results/SKILL.md"},
+    {"name": "summary", "path": "../skills/summary/SKILL.md"},
+    {"name": "report", "path": "../skills/report/SKILL.md"},
+    {"name": "list-scans", "path": "../skills/list-scans/SKILL.md"},
+    {"name": "visual-scan", "path": "../skills/visual-scan/SKILL.md"}
+  ],
+  "hooks": {
+    "SessionStart": ["scripts/install-deps.sh"]
+  },
+  "mcpServers": {
+    "cwac": {
+      "command": "python",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/cwac_mcp/server.py"]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"]
+    }
+  },
+  "dependencies": {
+    "python": ">=3.10",
+    "node": ">=18"
+  }
+}

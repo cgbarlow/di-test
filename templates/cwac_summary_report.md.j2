@@ -1,0 +1,46 @@
+# CWAC Scan Summary Report
+
+**Audit:** {{ audit_name }}
+**Date:** {{ scan_date }}
+
+---
+
+{% if summary %}
+## Overview
+
+**Total issues:** {{ summary.total_issues | default(0) }}
+
+{% if summary.by_audit_type %}
+## Issues by Audit Type
+
+| Audit Type | Count |
+|------------|-------|
+{% for audit_type, count in summary.by_audit_type.items() %}
+| {{ audit_type }} | {{ count }} |
+{% endfor %}
+{% endif %}
+
+{% if summary.axe_impact_breakdown %}
+## Axe-Core Impact Breakdown
+
+| Impact | Count |
+|--------|-------|
+{% for level, count in summary.axe_impact_breakdown.items() %}
+| {{ level | capitalize }} | {{ count }} |
+{% endfor %}
+{% endif %}
+
+{% if summary.top_violations %}
+## Top Violations
+
+| Rule | Count |
+|------|-------|
+{% for v in summary.top_violations %}
+| {{ v.id }} | {{ v.count }} |
+{% endfor %}
+{% endif %}
+{% endif %}
+
+---
+
+*Generated: {{ generated_at | default("N/A") }}*
