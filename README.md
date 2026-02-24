@@ -15,32 +15,75 @@ Together they provide a complete accessibility audit workflow: CWAC finds WCAG v
 
 ## Quick Start
 
-### Prerequisites
+### Claude Cowork and Claude Code Desktop
 
-- [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) (or any MCP-compatible LLM client)
-- Python 3.10+
-- Node.js v18+
-- [CWAC](https://github.com/GOVTNZ/cwac) installed at `/workspaces/cwac` (for CWAC MCP)
+1. From either the **Cowork** or **Code** tab in Claude Desktop, select **+** → **Plugins** → **Add plugin**
+2. **Add marketplace** — Select the **By Anthropic** dropdown, then select **Add marketplace from GitHub** and enter:
+   ```
+   cgbarlow/di-test/
+   ```
+3. **Install plugin** — find and install **DI Accessibility Testing Platform** from the marketplace
+4. **Start scanning** — the plugin installs dependencies automatically on first session. Then:
+   - `/di-test:scan https://example.govt.nz` — Run a CWAC accessibility scan
+   - `/di-test:visual-scan https://example.com/page` — Run visual pattern detection
+   - `/di-test:report` — Generate a report in Markdown + DOCX
 
-### Setup
+### Claude Code CLI
+
+1. **Install Claude Code** ([full guide](https://code.claude.com/docs/en/quickstart)):
+   ```bash
+   curl -fsSL https://claude.ai/install.sh | bash
+   ```
+2. **Add the marketplace** — in a Claude Code session:
+   ```
+   /plugin marketplace add cgbarlow/di-test
+   ```
+3. **Install the plugin:**
+   ```
+   /plugin install di-test@di-test-marketplace
+   ```
+4. **Start scanning:**
+   - `/di-test:scan https://example.govt.nz` — Run a CWAC accessibility scan
+   - `/di-test:visual-scan https://example.com/page` — Run visual pattern detection
+   - `/di-test:report` — Generate a report in Markdown + DOCX
+
+Dependencies are installed automatically via the SessionStart hook. You never need to run `pip install` or `npm install` manually.
+
+### Manual Setup (without plugin)
+
+If you prefer to run without the plugin system:
 
 1. Clone the repository:
    ```bash
    git clone https://github.com/cgbarlow/di-test.git
    cd di-test
    ```
-
 2. Install dependencies:
    ```bash
-   # Playwright MCP (visual pattern scanner)
+   pip install -r cwac_mcp/requirements.txt
    npm install
    npx playwright install --with-deps chromium
-
-   # CWAC MCP server
-   pip install -r cwac_mcp/requirements.txt
    ```
+3. Install [CWAC](https://github.com/GOVTNZ/cwac) as a sibling directory or set `CWAC_PATH`
+4. Both MCP servers are configured in `.mcp.json`. Claude Code will discover them automatically.
 
-3. Both MCP servers are configured in `.mcp.json`. Claude Code will discover them automatically.
+### Prerequisites
+
+- Python 3.10+
+- Node.js v18+
+- [CWAC](https://github.com/GOVTNZ/cwac) installed at a discoverable location (for CWAC MCP tools)
+
+### Available Commands
+
+| Command | What it does |
+|---------|-------------|
+| `/di-test:scan` | Start a CWAC accessibility scan against one or more URLs |
+| `/di-test:scan-status` | Check the status of a running scan |
+| `/di-test:results` | Get detailed findings from a completed scan |
+| `/di-test:summary` | Get a high-level summary of findings |
+| `/di-test:report` | Generate a report in Markdown and DOCX formats |
+| `/di-test:list-scans` | List all active and historical scan results |
+| `/di-test:visual-scan` | Run the visual pattern scanner via Playwright MCP |
 
 ---
 
@@ -277,34 +320,50 @@ Each finding includes:
 
 ```
 di-test/
+├── .claude-plugin/
+│   └── plugin.json                        # Claude Code plugin manifest
 ├── .mcp.json                              # MCP server configuration (Playwright + CWAC)
+├── marketplace.json                       # Plugin marketplace listing
 ├── cwac_mcp/                              # CWAC MCP server
-│   ├── __init__.py                        # Package init, CWAC_PATH constant
+│   ├── __init__.py                        # Package init, CWAC_PATH discovery
 │   ├── server.py                          # FastMCP server with 6 tool definitions
 │   ├── cwac_runner.py                     # Subprocess execution of CWAC
 │   ├── config_builder.py                  # Builds CWAC config JSON from tool params
 │   ├── result_reader.py                   # Reads/parses CWAC result CSVs
 │   ├── scan_registry.py                   # Tracks active/completed scans in memory
-│   └── requirements.txt                   # Python dependencies (mcp[cli])
+│   ├── report_generator.py               # Markdown + DOCX report generation
+│   └── requirements.txt                   # Python dependencies
+├── skills/                                # Plugin skill definitions
+│   ├── scan/SKILL.md                      # /di-test:scan
+│   ├── scan-status/SKILL.md               # /di-test:scan-status
+│   ├── results/SKILL.md                   # /di-test:results
+│   ├── summary/SKILL.md                   # /di-test:summary
+│   ├── report/SKILL.md                    # /di-test:report
+│   ├── list-scans/SKILL.md                # /di-test:list-scans
+│   └── visual-scan/SKILL.md               # /di-test:visual-scan
+├── hooks/
+│   └── hooks.json                         # SessionStart hook configuration
+├── scripts/
+│   └── install-deps.sh                    # Dependency installation (idempotent)
+├── templates/                             # Jinja2 report templates
+│   ├── cwac_scan_report.md.j2             # Detailed CWAC scan report
+│   ├── cwac_summary_report.md.j2          # Summary report
+│   └── visual_scan_report.md.j2           # Visual pattern scan report
+├── tests/                                 # Test suites
+│   ├── *.feature                          # Gherkin scenarios (visual scanner)
+│   ├── conftest.py                        # Shared pytest fixtures
+│   ├── test_config_builder.py             # Config builder tests
+│   ├── test_result_reader.py              # Result reader tests
+│   ├── test_scan_registry.py              # Scan registry tests
+│   ├── test_plugin_manifest.py            # Plugin manifest validation
+│   ├── test_report_generator.py           # Report generator tests
+│   └── test_report_templates.py           # Template rendering tests
 ├── docs/
 │   ├── adr/                               # Architecture Decision Records
-│   │   ├── ADR-000-visual-pattern-scanner.md
-│   │   ├── ADR-001-cwac-mcp-integration-approach.md
-│   │   ├── ADR-002-subprocess-vs-direct-import.md
-│   │   └── ADR-003-scan-lifecycle-management.md
+│   │   ├── ADR-000 through ADR-006
 │   └── specs/                             # Technical Specifications
-│       ├── SPEC-000-A-visual-pattern-scanner.md
-│       ├── SPEC-001-A-mcp-tool-definitions.md
-│       ├── SPEC-002-A-subprocess-execution-model.md
-│       └── SPEC-003-A-scan-registry-design.md
-├── tests/                                 # Gherkin test scenarios (visual scanner)
-│   ├── page-crawl.feature
-│   ├── heading-detection.feature
-│   ├── card-detection.feature
-│   ├── screenshot-and-highlighting.feature
-│   ├── output-format.feature
-│   └── ai-classification.feature
-└── output/                                # Generated scan output (visual scanner)
+│       ├── SPEC-000-A through SPEC-006-A
+└── output/                                # Generated scan output
     ├── accessibility-scan-report.md
     ├── accessibility-scan-report.docx
     ├── findings.json
@@ -323,6 +382,9 @@ All architectural decisions are documented using the WH(Y) ADR format:
 | [ADR-001](docs/adr/ADR-001-cwac-mcp-integration-approach.md) | MCP server wrapper for CWAC integration | MCP provides structured tools + Claude Code integration; requires additional server process |
 | [ADR-002](docs/adr/ADR-002-subprocess-vs-direct-import.md) | Subprocess execution instead of direct Python import | Zero CWAC modifications + update compatibility; subprocess overhead + temp file management |
 | [ADR-003](docs/adr/ADR-003-scan-lifecycle-management.md) | Async scan model with in-memory registry | Non-blocking scans + concurrent support; state lost on server restart |
+| [ADR-004](docs/adr/ADR-004-plugin-architecture.md) | Same-repo Claude Code plugin with marketplace | Zero-friction install + skill discoverability; requires repo access |
+| [ADR-005](docs/adr/ADR-005-report-template-system.md) | Jinja2 + python-docx dual-format reports | Markdown + DOCX from structured data, no pandoc; python-docx adds dependency |
+| [ADR-006](docs/adr/ADR-006-dependency-management.md) | SessionStart hook with CWAC_PATH discovery chain | Auto-install + portable paths; startup latency on first session |
 
 ### Technical Specifications
 
@@ -332,6 +394,9 @@ All architectural decisions are documented using the WH(Y) ADR format:
 | [SPEC-001-A](docs/specs/SPEC-001-A-mcp-tool-definitions.md) | All 6 MCP tool definitions with parameters, return values, and behaviour | ADR-001 |
 | [SPEC-002-A](docs/specs/SPEC-002-A-subprocess-execution-model.md) | Subprocess invocation, config generation, process monitoring, cleanup | ADR-002 |
 | [SPEC-003-A](docs/specs/SPEC-003-A-scan-registry-design.md) | Scan registry data structure, state transitions, thread safety | ADR-003 |
+| [SPEC-004-A](docs/specs/SPEC-004-A-manifest-and-skills.md) | Plugin manifest schema, skill definitions, marketplace config | ADR-004 |
+| [SPEC-005-A](docs/specs/SPEC-005-A-template-definitions.md) | Report templates, Jinja2 rendering, DOCX generation, auto-report | ADR-005 |
+| [SPEC-006-A](docs/specs/SPEC-006-A-installation-pipeline.md) | SessionStart hook, install script, CWAC_PATH discovery, verification | ADR-006 |
 
 ## Design Principles
 

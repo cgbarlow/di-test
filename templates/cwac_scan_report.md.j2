@@ -1,0 +1,64 @@
+# CWAC Accessibility Scan Report
+
+**Audit:** {{ audit_name }}
+**Date:** {{ scan_date }}
+**Base URL:** {{ base_url | default("N/A") }}
+**Pages Scanned:** {{ pages_scanned | default("N/A") }}
+
+---
+
+## Summary
+
+| Metric | Value |
+|--------|-------|
+| Total issues | {{ total_issues | default(0) }} |
+{% if summary %}
+{% if summary.axe_impact_breakdown %}
+{% for level, count in summary.axe_impact_breakdown.items() %}
+| {{ level | capitalize }} | {{ count }} |
+{% endfor %}
+{% endif %}
+{% endif %}
+
+{% if summary and summary.by_audit_type %}
+## Issues by Audit Type
+
+| Audit Type | Count |
+|------------|-------|
+{% for audit_type, count in summary.by_audit_type.items() %}
+| {{ audit_type }} | {{ count }} |
+{% endfor %}
+{% endif %}
+
+{% if summary and summary.top_violations %}
+## Top Violations
+
+| Rule | Count |
+|------|-------|
+{% for v in summary.top_violations %}
+| {{ v.id }} | {{ v.count }} |
+{% endfor %}
+{% endif %}
+
+{% if results %}
+## Detailed Findings
+
+{% for result in results %}
+### Finding {{ loop.index }}: {{ result.id | default("Unknown") }}
+
+- **Impact:** {{ result.impact | default("N/A") }}
+- **Description:** {{ result.description | default("N/A") }}
+- **URL:** {{ result.url | default("N/A") }}
+{% if result.html %}
+- **HTML:** `{{ result.html }}`
+{% endif %}
+{% if result.target %}
+- **Target:** `{{ result.target }}`
+{% endif %}
+
+{% endfor %}
+{% endif %}
+
+---
+
+*Generated: {{ generated_at | default("N/A") }}*

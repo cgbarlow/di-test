@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2026-02-24
+
+### Added
+
+- **Claude Code Plugin** — di-test is now a distributable Claude Code plugin with marketplace support.
+  - Plugin manifest at `.claude-plugin/plugin.json` with 7 skills, hooks, and MCP server config.
+  - Marketplace listing at `marketplace.json` for same-repo installation.
+  - 7 skills: `/di-test:scan`, `/di-test:scan-status`, `/di-test:results`, `/di-test:summary`, `/di-test:report`, `/di-test:list-scans`, `/di-test:visual-scan`.
+  - SessionStart hook for automatic dependency installation via `scripts/install-deps.sh`.
+- **Report Template System** — Auto-generated reports in Markdown and DOCX formats.
+  - `cwac_mcp/report_generator.py` — Jinja2-based markdown + python-docx DOCX generation.
+  - 3 Jinja2 templates: `cwac_scan_report.md.j2`, `cwac_summary_report.md.j2`, `visual_scan_report.md.j2`.
+  - Reports auto-save to `./output/` as `{audit_name}_{timestamp}_report.{md,docx}`.
+- **CWAC_PATH Discovery** — Configurable CWAC path with env var → sibling dir → fallback chain.
+- **Test Suite** — 68 pytest tests across 7 test files covering report generation, templates, plugin manifest, config builder, result reader, and scan registry.
+- **Architecture Decision Records** — 3 new ADRs for v0.2:
+  - ADR-004: Plugin architecture (same-repo marketplace model)
+  - ADR-005: Report template system (Jinja2 + python-docx)
+  - ADR-006: Dependency management (SessionStart hook + CWAC_PATH discovery)
+- **Technical Specifications** — 3 new SPECs for v0.2:
+  - SPEC-004-A: Plugin manifest and skill definitions
+  - SPEC-005-A: Report template definitions and rendering pipeline
+  - SPEC-006-A: Installation pipeline and dependency verification
+
+### Changed
+
+- **`cwac_mcp/__init__.py`** — CWAC_PATH now uses a discovery chain instead of a hardcoded path.
+- **`cwac_mcp/requirements.txt`** — Added `python-docx` and `jinja2` dependencies.
+- **`README.md`** — Added Quick Start sections for Claude Desktop, Claude Code CLI, and manual setup; updated project structure; added commands table.
+
 ## [0.1.1] - 2026-02-24
 
 ### Added
