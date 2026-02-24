@@ -10,7 +10,7 @@ The plugin auto-detects your environment and selects the best available mode:
 
 | Mode | When | What you get |
 |------|------|-------------|
-| **Full (Visual patterns + complete CWAC suite)** | x86-64 systems with CWAC installed | All audit plugins: axe-core, language, readability, broken links, SEO, and more |
+| **Full (Visual patterns + complete CWAC suite)** | x86-64 systems with CWAC installed (dependencies auto-installed) | All audit plugins: axe-core, language, readability, broken links, SEO, and more |
 | **Fallback (Visual patterns + axe-core)** | ARM64 systems or when CWAC is unavailable | axe-core accessibility scanning via Playwright — catches WCAG violations on any architecture |
 
 You'll see which mode is active when you start a scan. No configuration needed.
