@@ -2,6 +2,10 @@
 
 Thanks for your interest in contributing to di-test.
 
+## Feature Requests and Bug Reports
+
+Please submit feature requests and bug reports on the [GitHub Issues page](https://github.com/cgbarlow/di-test/issues).
+
 ## Getting Started
 
 For development setup instructions, see [Manual Setup](docs/MANUAL-SETUP.md).
