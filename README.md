@@ -30,7 +30,7 @@ These principles guide everything the tool does:
 1. Select **+** then **Plugins** then **Add plugin**
 2. Select the **By Anthropic** dropdown, then **Add marketplace from GitHub** and enter:
    ```
-   cgbarlow/di-test/
+   https://github.com/cgbarlow/di-test/
    ```
 3. Find and install **DI Accessibility Testing Platform** from the marketplace
 4. Start scanning:
