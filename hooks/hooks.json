@@ -1,9 +1,15 @@
 {
-  "hooks": [
-    {
-      "event": "SessionStart",
-      "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/install-deps.sh",
-      "description": "Install Python and Node.js dependencies for di-test plugin"
-    }
-  ]
+  "description": "Install Python and Node.js dependencies for di-test plugin",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/install-deps.sh"
+          }
+        ]
+      }
+    ]
+  }
 }
