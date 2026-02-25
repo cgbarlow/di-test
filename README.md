@@ -134,7 +134,7 @@ For technical details, see [CWAC MCP Server](docs/CWAC-MCP.md) and [Visual Patte
 
 This tool was instigated by **Di Drayton**, Accessibility Subject Matter Expert, who defined the original specification for visual pattern detection ([SPEC-000-A](docs/specs/SPEC-000-A-visual-pattern-scanner.md)).
 
-The CWAC integration wraps the [Centralised Web Accessibility Checker](https://github.com/GOVTNZ/cwac), created by the **Web Standards team** within the Digital Public Service branch of **Te Tari Taiwhenua | Department of Internal Affairs**, New Zealand Government. CWAC is licensed under GPL-3.0.
+The CWAC integration wraps the [Centralised Web Accessibility Checker](https://github.com/GOVTNZ/cwac), created by the **Web Standards team** within the Digital Public Service branch of **Te Tari Taiwhenua, Department of Internal Affairs**, New Zealand Government. CWAC is licensed under GPL-3.0.
 
 Built by [Chris Barlow](https://github.com/cgbarlow).
 
