@@ -1,4 +1,21 @@
-theme: jekyll-theme-primer
+remote_theme: pages-themes/architect@v0.2.0
+title: di-test
+description: Accessibility testing tool that finds WCAG violations and catches patterns automated tools miss.
+url: https://chrisbarlow.nz
+baseurl: /di-test
+lang: en_NZ
+
+author:
+  name: Chris Barlow
+  url: https://chrisbarlow.nz
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  typographic_symbols:
+    mdash: "---"
+    ndash: "--"
+
 exclude:
   - templates/
   - cwac_mcp/
@@ -19,3 +36,7 @@ exclude:
   - docs/adr/
   - .claude-plugin/
   - .campaign/
+
+plugins:
+  - jekyll-remote-theme
+  - jekyll-seo-tag
