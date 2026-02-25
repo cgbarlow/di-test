@@ -47,6 +47,7 @@ These principles guide everything the tool does:
    ```
 3. Find and install **DI Accessibility Testing Platform** from the marketplace
 4. Start scanning:
+   - `/di-test:full-scan https://example.govt.nz` — Run a full accessibility scan (WCAG + visual patterns) and generate reports
    - `/di-test:scan https://example.govt.nz` — Run an accessibility scan
    - `/di-test:visual-scan https://example.com/page` — Run visual pattern detection
    - `/di-test:report` — Generate a report in Markdown + Word
