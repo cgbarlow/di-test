@@ -16,9 +16,19 @@ Feature: Output Format
     When the scan produces findings
     Then every finding should include a "type" field
     And the type should be one of:
-      | type                  |
-      | Heading-like content  |
-      | Card-like content     |
+      | type                          |
+      | Heading-like content          |
+      | Card-like content             |
+      | Government identity           |
+      | CAPTCHA detected              |
+      | Carousel detected             |
+      | Disclosure widget detected    |
+      | Heading text quality          |
+      | Link quality                  |
+      | Skip link                     |
+      | Modal dialog detected         |
+      | Page title                    |
+      | Print stylesheet reminder     |
 
   Scenario: Each finding includes DOM location
     When the scan produces findings

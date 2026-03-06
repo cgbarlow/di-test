@@ -8,13 +8,13 @@ This page collects example scan outputs from di-test. These are point-in-time sn
 
 A visual pattern scan was run against the [FinCap Our Team page](https://www.fincap.org.nz/our-team/) as a proof of concept.
 
-**Key findings:** 19 heading-like candidates (team member names using `<p class="h3">` instead of `<h3>`), 19 card-like candidates (repeated `<article>` structures), a link mismatch, and an empty `<h2>`.
+**Key findings (52 total):** 20 heading-like candidates (team member names using `<p class="h3">` instead of `<h3>`), 22 card-like candidates (repeated `<article>` structures), 3 government identity checks (logo found, no copyright notice, no privacy link), 2 link quality issues (new window warnings), 1 disclosure widget, 1 heading text quality finding (empty heading), 1 skip link assessment, 1 page title check, and 1 print stylesheet reminder.
 
 | File | Description |
 |------|-------------|
 | [Scan Report (Markdown)](../output/accessibility-scan-report.md) | Detailed findings with analysis and recommendations |
 | [Scan Report (Word)](../output/accessibility-scan-report.docx) | Same report in .docx format |
-| [Findings JSON](../output/findings.json) | Structured JSON output with all 38 findings |
+| [Findings JSON](../output/findings.json) | Structured JSON output with all 52 findings |
 | [Full Page Screenshot](../output/screenshots/our-team-full.png) | Full-page capture |
 | [Highlighted Screenshot](../output/screenshots/our-team-highlighted.png) | Red overlays on flagged elements |
 

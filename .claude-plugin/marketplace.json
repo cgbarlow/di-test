@@ -2,7 +2,7 @@
   "name": "di-test-marketplace",
   "metadata": {
     "description": "DI Accessibility Testing Platform — finds WCAG violations and catches patterns automated tools miss.",
-    "version": "0.3.0"
+    "version": "0.4.0"
   },
   "owner": {
     "name": "Chris Barlow",

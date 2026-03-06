@@ -2,476 +2,717 @@
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Heading-like content",
-    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: larger font size (30px vs 18px body), heavier weight (500 vs 400), isolated on its own line, with vertical margin separation.",
+    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: font size 30px (vs 18px body), weight 500 (vs 400 body).",
     "location": {
-      "cssSelector": "section:nth-of-type(2) article:nth-child(1) p.h3.card-title",
-      "xpath": "/html/body/main/section[2]/div/div[2]/div[1]/article/div[2]/p[1]"
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(1) > article > div:nth-of-type(2) > p:nth-of-type(1)",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[1]/article[1]/div[2]/p[1]"
     },
-    "visual": { "fontSize": "30px", "fontWeight": "500" },
-    "screenshot": "our-team-item0.png",
+    "visual": {
+      "fontSize": "30px",
+      "fontWeight": "500"
+    },
+    "screenshot": "",
     "htmlSnippet": "<p class=\"h3 card-title mb-4\">Fleur Howard</p>",
     "confidence": 0.95
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Heading-like content",
-    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: larger font size (30px vs 18px body), heavier weight (500 vs 400), isolated on its own line, with vertical margin separation.",
+    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: font size 30px (vs 18px body), weight 500 (vs 400 body).",
     "location": {
-      "cssSelector": "section:nth-of-type(2) article:nth-child(2) p.h3.card-title",
-      "xpath": "/html/body/main/section[2]/div/div[2]/div[2]/article/div[2]/p[1]"
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > article > div:nth-of-type(2) > p:nth-of-type(1)",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[2]/article[1]/div[2]/p[1]"
     },
-    "visual": { "fontSize": "30px", "fontWeight": "500" },
-    "screenshot": "our-team-item1.png",
+    "visual": {
+      "fontSize": "30px",
+      "fontWeight": "500"
+    },
+    "screenshot": "",
     "htmlSnippet": "<p class=\"h3 card-title mb-4\">Jake Lilley</p>",
     "confidence": 0.95
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Heading-like content",
-    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: larger font size (30px vs 18px body), heavier weight (500 vs 400), isolated on its own line, with vertical margin separation.",
+    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: font size 30px (vs 18px body), weight 500 (vs 400 body).",
     "location": {
-      "cssSelector": "section:nth-of-type(2) article:nth-child(3) p.h3.card-title",
-      "xpath": "/html/body/main/section[2]/div/div[2]/div[3]/article/div[2]/p[1]"
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > article > div:nth-of-type(2) > p:nth-of-type(1)",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[3]/article[1]/div[2]/p[1]"
     },
-    "visual": { "fontSize": "30px", "fontWeight": "500" },
-    "screenshot": "our-team-item2.png",
+    "visual": {
+      "fontSize": "30px",
+      "fontWeight": "500"
+    },
+    "screenshot": "",
     "htmlSnippet": "<p class=\"h3 card-title mb-4\">Iuni Perez</p>",
     "confidence": 0.95
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Heading-like content",
-    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: larger font size (30px vs 18px body), heavier weight (500 vs 400), isolated on its own line, with vertical margin separation.",
+    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: font size 30px (vs 18px body), weight 500 (vs 400 body).",
     "location": {
-      "cssSelector": "section:nth-of-type(2) article:nth-child(4) p.h3.card-title",
-      "xpath": "/html/body/main/section[2]/div/div[2]/div[4]/article/div[2]/p[1]"
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(4) > article > div:nth-of-type(2) > p:nth-of-type(1)",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[4]/article[1]/div[2]/p[1]"
     },
-    "visual": { "fontSize": "30px", "fontWeight": "500" },
-    "screenshot": "our-team-item3.png",
+    "visual": {
+      "fontSize": "30px",
+      "fontWeight": "500"
+    },
+    "screenshot": "",
     "htmlSnippet": "<p class=\"h3 card-title mb-4\">Nige Cox</p>",
     "confidence": 0.95
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Heading-like content",
-    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: larger font size (30px vs 18px body), heavier weight (500 vs 400), isolated on its own line, with vertical margin separation.",
+    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: font size 30px (vs 18px body), weight 500 (vs 400 body).",
     "location": {
-      "cssSelector": "section:nth-of-type(2) article:nth-child(5) p.h3.card-title",
-      "xpath": "/html/body/main/section[2]/div/div[2]/div[5]/article/div[2]/p[1]"
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(5) > article > div:nth-of-type(2) > p:nth-of-type(1)",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[5]/article[1]/div[2]/p[1]"
     },
-    "visual": { "fontSize": "30px", "fontWeight": "500" },
-    "screenshot": "our-team-item4.png",
+    "visual": {
+      "fontSize": "30px",
+      "fontWeight": "500"
+    },
+    "screenshot": "",
     "htmlSnippet": "<p class=\"h3 card-title mb-4\">Paula Arkinstall</p>",
     "confidence": 0.95
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Heading-like content",
-    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: larger font size (30px vs 18px body), heavier weight (500 vs 400), isolated on its own line, with vertical margin separation.",
+    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: font size 30px (vs 18px body), weight 500 (vs 400 body).",
     "location": {
-      "cssSelector": "section:nth-of-type(2) article:nth-child(6) p.h3.card-title",
-      "xpath": "/html/body/main/section[2]/div/div[2]/div[6]/article/div[2]/p[1]"
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(6) > article > div:nth-of-type(2) > p:nth-of-type(1)",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[6]/article[1]/div[2]/p[1]"
     },
-    "visual": { "fontSize": "30px", "fontWeight": "500" },
-    "screenshot": "our-team-item5.png",
+    "visual": {
+      "fontSize": "30px",
+      "fontWeight": "500"
+    },
+    "screenshot": "",
     "htmlSnippet": "<p class=\"h3 card-title mb-4\">Deanna Harrison</p>",
     "confidence": 0.95
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Heading-like content",
-    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: larger font size (30px vs 18px body), heavier weight (500 vs 400), isolated on its own line, with vertical margin separation.",
+    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: font size 30px (vs 18px body), weight 500 (vs 400 body).",
     "location": {
-      "cssSelector": "section:nth-of-type(2) article:nth-child(7) p.h3.card-title",
-      "xpath": "/html/body/main/section[2]/div/div[2]/div[7]/article/div[2]/p[1]"
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(7) > article > div:nth-of-type(2) > p:nth-of-type(1)",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[7]/article[1]/div[2]/p[1]"
     },
-    "visual": { "fontSize": "30px", "fontWeight": "500" },
-    "screenshot": "our-team-item6.png",
+    "visual": {
+      "fontSize": "30px",
+      "fontWeight": "500"
+    },
+    "screenshot": "",
+    "htmlSnippet": "<p class=\"h3 card-title mb-4\">Angela Smart</p>",
+    "confidence": 0.95
+  },
+  {
+    "url": "https://www.fincap.org.nz/our-team/",
+    "type": "Heading-like content",
+    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: font size 30px (vs 18px body), weight 500 (vs 400 body).",
+    "location": {
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(8) > article > div:nth-of-type(2) > p:nth-of-type(1)",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[8]/article[1]/div[2]/p[1]"
+    },
+    "visual": {
+      "fontSize": "30px",
+      "fontWeight": "500"
+    },
+    "screenshot": "",
     "htmlSnippet": "<p class=\"h3 card-title mb-4\">Katie Brannan</p>",
     "confidence": 0.95
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Heading-like content",
-    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: larger font size (30px vs 18px body), heavier weight (500 vs 400), isolated on its own line, with vertical margin separation.",
+    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: font size 30px (vs 18px body), weight 500 (vs 400 body).",
     "location": {
-      "cssSelector": "section:nth-of-type(2) article:nth-child(8) p.h3.card-title",
-      "xpath": "/html/body/main/section[2]/div/div[2]/div[8]/article/div[2]/p[1]"
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(9) > article > div:nth-of-type(2) > p:nth-of-type(1)",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[9]/article[1]/div[2]/p[1]"
     },
-    "visual": { "fontSize": "30px", "fontWeight": "500" },
-    "screenshot": "our-team-item7.png",
+    "visual": {
+      "fontSize": "30px",
+      "fontWeight": "500"
+    },
+    "screenshot": "",
     "htmlSnippet": "<p class=\"h3 card-title mb-4\">Rocky Webster</p>",
     "confidence": 0.95
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Heading-like content",
-    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: larger font size (30px vs 18px body), heavier weight (500 vs 400), isolated on its own line, with vertical margin separation.",
+    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: font size 30px (vs 18px body), weight 500 (vs 400 body).",
     "location": {
-      "cssSelector": "section:nth-of-type(2) article:nth-child(9) p.h3.card-title",
-      "xpath": "/html/body/main/section[2]/div/div[2]/div[9]/article/div[2]/p[1]"
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(10) > article > div:nth-of-type(2) > p:nth-of-type(1)",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[10]/article[1]/div[2]/p[1]"
     },
-    "visual": { "fontSize": "30px", "fontWeight": "500" },
-    "screenshot": "our-team-item8.png",
+    "visual": {
+      "fontSize": "30px",
+      "fontWeight": "500"
+    },
+    "screenshot": "",
     "htmlSnippet": "<p class=\"h3 card-title mb-4\">Jocelyn Kua</p>",
     "confidence": 0.95
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Heading-like content",
-    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: larger font size (30px vs 18px body), heavier weight (500 vs 400), isolated on its own line, with vertical margin separation.",
+    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: font size 30px (vs 18px body), weight 500 (vs 400 body).",
     "location": {
-      "cssSelector": "section:nth-of-type(2) article:nth-child(10) p.h3.card-title",
-      "xpath": "/html/body/main/section[2]/div/div[2]/div[10]/article/div[2]/p[1]"
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(11) > article > div:nth-of-type(2) > p:nth-of-type(1)",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[11]/article[1]/div[2]/p[1]"
     },
-    "visual": { "fontSize": "30px", "fontWeight": "500" },
-    "screenshot": "our-team-item9.png",
+    "visual": {
+      "fontSize": "30px",
+      "fontWeight": "500"
+    },
+    "screenshot": "",
     "htmlSnippet": "<p class=\"h3 card-title mb-4\">Donna Allan</p>",
     "confidence": 0.95
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Heading-like content",
-    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: larger font size (30px vs 18px body), heavier weight (500 vs 400), isolated on its own line, with vertical margin separation.",
+    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: font size 30px (vs 18px body), weight 500 (vs 400 body).",
     "location": {
-      "cssSelector": "section:nth-of-type(3) article:nth-child(1) p.h3.card-title",
-      "xpath": "/html/body/main/section[3]/div/div[2]/div[1]/article/div[2]/p[1]"
+      "cssSelector": "main > section:nth-of-type(3) > div > div:nth-of-type(2) > div:nth-of-type(1) > article > div:nth-of-type(2) > p:nth-of-type(1)",
+      "xpath": "/html[1]/body[1]/main[1]/section[3]/div[1]/div[2]/div[1]/article[1]/div[2]/p[1]"
     },
-    "visual": { "fontSize": "30px", "fontWeight": "500" },
-    "screenshot": "our-team-item10.png",
+    "visual": {
+      "fontSize": "30px",
+      "fontWeight": "500"
+    },
+    "screenshot": "",
     "htmlSnippet": "<p class=\"h3 card-title mb-4\">Kerry Francis </p>",
     "confidence": 0.95
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Heading-like content",
-    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: larger font size (30px vs 18px body), heavier weight (500 vs 400), isolated on its own line, with vertical margin separation.",
+    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: font size 30px (vs 18px body), weight 500 (vs 400 body).",
     "location": {
-      "cssSelector": "section:nth-of-type(3) article:nth-child(2) p.h3.card-title",
-      "xpath": "/html/body/main/section[3]/div/div[2]/div[2]/article/div[2]/p[1]"
+      "cssSelector": "main > section:nth-of-type(3) > div > div:nth-of-type(2) > div:nth-of-type(2) > article > div:nth-of-type(2) > p:nth-of-type(1)",
+      "xpath": "/html[1]/body[1]/main[1]/section[3]/div[1]/div[2]/div[2]/article[1]/div[2]/p[1]"
     },
-    "visual": { "fontSize": "30px", "fontWeight": "500" },
-    "screenshot": "our-team-item11.png",
+    "visual": {
+      "fontSize": "30px",
+      "fontWeight": "500"
+    },
+    "screenshot": "",
     "htmlSnippet": "<p class=\"h3 card-title mb-4\">Renee Rewi</p>",
     "confidence": 0.95
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Heading-like content",
-    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: larger font size (30px vs 18px body), heavier weight (500 vs 400), isolated on its own line, with vertical margin separation.",
+    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: font size 30px (vs 18px body), weight 500 (vs 400 body).",
     "location": {
-      "cssSelector": "section:nth-of-type(3) article:nth-child(3) p.h3.card-title",
-      "xpath": "/html/body/main/section[3]/div/div[2]/div[3]/article/div[2]/p[1]"
+      "cssSelector": "main > section:nth-of-type(3) > div > div:nth-of-type(2) > div:nth-of-type(3) > article > div:nth-of-type(2) > p:nth-of-type(1)",
+      "xpath": "/html[1]/body[1]/main[1]/section[3]/div[1]/div[2]/div[3]/article[1]/div[2]/p[1]"
     },
-    "visual": { "fontSize": "30px", "fontWeight": "500" },
-    "screenshot": "our-team-item12.png",
+    "visual": {
+      "fontSize": "30px",
+      "fontWeight": "500"
+    },
+    "screenshot": "",
     "htmlSnippet": "<p class=\"h3 card-title mb-4\">Rosser Thornley</p>",
     "confidence": 0.95
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Heading-like content",
-    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: larger font size (30px vs 18px body), heavier weight (500 vs 400), isolated on its own line, with vertical margin separation.",
+    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: font size 30px (vs 18px body), weight 500 (vs 400 body).",
     "location": {
-      "cssSelector": "section:nth-of-type(3) article:nth-child(4) p.h3.card-title",
-      "xpath": "/html/body/main/section[3]/div/div[2]/div[4]/article/div[2]/p[1]"
+      "cssSelector": "main > section:nth-of-type(3) > div > div:nth-of-type(2) > div:nth-of-type(4) > article > div:nth-of-type(2) > p:nth-of-type(1)",
+      "xpath": "/html[1]/body[1]/main[1]/section[3]/div[1]/div[2]/div[4]/article[1]/div[2]/p[1]"
     },
-    "visual": { "fontSize": "30px", "fontWeight": "500" },
-    "screenshot": "our-team-item13.png",
+    "visual": {
+      "fontSize": "30px",
+      "fontWeight": "500"
+    },
+    "screenshot": "",
     "htmlSnippet": "<p class=\"h3 card-title mb-4\">Theresa Alaimoana</p>",
     "confidence": 0.95
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Heading-like content",
-    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: larger font size (30px vs 18px body), heavier weight (500 vs 400), isolated on its own line, with vertical margin separation.",
+    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: font size 30px (vs 18px body), weight 500 (vs 400 body).",
     "location": {
-      "cssSelector": "section:nth-of-type(3) article:nth-child(5) p.h3.card-title",
-      "xpath": "/html/body/main/section[3]/div/div[2]/div[5]/article/div[2]/p[1]"
+      "cssSelector": "main > section:nth-of-type(3) > div > div:nth-of-type(2) > div:nth-of-type(5) > article > div:nth-of-type(2) > p:nth-of-type(1)",
+      "xpath": "/html[1]/body[1]/main[1]/section[3]/div[1]/div[2]/div[5]/article[1]/div[2]/p[1]"
     },
-    "visual": { "fontSize": "30px", "fontWeight": "500" },
-    "screenshot": "our-team-item14.png",
+    "visual": {
+      "fontSize": "30px",
+      "fontWeight": "500"
+    },
+    "screenshot": "",
     "htmlSnippet": "<p class=\"h3 card-title mb-4\">David Baines</p>",
     "confidence": 0.95
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Heading-like content",
-    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: larger font size (30px vs 18px body), heavier weight (500 vs 400), isolated on its own line, with vertical margin separation.",
+    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: font size 30px (vs 18px body), weight 500 (vs 400 body).",
     "location": {
-      "cssSelector": "section:nth-of-type(3) article:nth-child(6) p.h3.card-title",
-      "xpath": "/html/body/main/section[3]/div/div[2]/div[6]/article/div[2]/p[1]"
+      "cssSelector": "main > section:nth-of-type(3) > div > div:nth-of-type(2) > div:nth-of-type(6) > article > div:nth-of-type(2) > p:nth-of-type(1)",
+      "xpath": "/html[1]/body[1]/main[1]/section[3]/div[1]/div[2]/div[6]/article[1]/div[2]/p[1]"
     },
-    "visual": { "fontSize": "30px", "fontWeight": "500" },
-    "screenshot": "our-team-item15.png",
+    "visual": {
+      "fontSize": "30px",
+      "fontWeight": "500"
+    },
+    "screenshot": "",
     "htmlSnippet": "<p class=\"h3 card-title mb-4\">Geoff Smith</p>",
     "confidence": 0.95
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Heading-like content",
-    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: larger font size (30px vs 18px body), heavier weight (500 vs 400), isolated on its own line, with vertical margin separation.",
+    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: font size 30px (vs 18px body), weight 500 (vs 400 body).",
     "location": {
-      "cssSelector": "section:nth-of-type(3) article:nth-child(7) p.h3.card-title",
-      "xpath": "/html/body/main/section[3]/div/div[2]/div[7]/article/div[2]/p[1]"
+      "cssSelector": "main > section:nth-of-type(3) > div > div:nth-of-type(2) > div:nth-of-type(7) > article > div:nth-of-type(2) > p:nth-of-type(1)",
+      "xpath": "/html[1]/body[1]/main[1]/section[3]/div[1]/div[2]/div[7]/article[1]/div[2]/p[1]"
     },
-    "visual": { "fontSize": "30px", "fontWeight": "500" },
-    "screenshot": "our-team-item16.png",
+    "visual": {
+      "fontSize": "30px",
+      "fontWeight": "500"
+    },
+    "screenshot": "",
     "htmlSnippet": "<p class=\"h3 card-title mb-4\">Sally Morrison</p>",
     "confidence": 0.95
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Heading-like content",
-    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: larger font size (30px vs 18px body), heavier weight (500 vs 400), isolated on its own line, with vertical margin separation.",
+    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: font size 30px (vs 18px body), weight 500 (vs 400 body).",
     "location": {
-      "cssSelector": "section:nth-of-type(3) article:nth-child(8) p.h3.card-title",
-      "xpath": "/html/body/main/section[3]/div/div[2]/div[8]/article/div[2]/p[1]"
+      "cssSelector": "main > section:nth-of-type(3) > div > div:nth-of-type(2) > div:nth-of-type(8) > article > div:nth-of-type(2) > p:nth-of-type(1)",
+      "xpath": "/html[1]/body[1]/main[1]/section[3]/div[1]/div[2]/div[8]/article[1]/div[2]/p[1]"
     },
-    "visual": { "fontSize": "30px", "fontWeight": "500" },
-    "screenshot": "our-team-item17.png",
+    "visual": {
+      "fontSize": "30px",
+      "fontWeight": "500"
+    },
+    "screenshot": "",
     "htmlSnippet": "<p class=\"h3 card-title mb-4\">Anika Forsman</p>",
     "confidence": 0.95
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Heading-like content",
-    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: larger font size (30px vs 18px body), heavier weight (500 vs 400), isolated on its own line, with vertical margin separation.",
+    "reason": "This appears to function as a heading but is not marked up as one. The element uses a <p> tag with class 'h3' and has visual characteristics of a heading: font size 30px (vs 18px body), weight 500 (vs 400 body).",
     "location": {
-      "cssSelector": "section:nth-of-type(3) article:nth-child(9) p.h3.card-title",
-      "xpath": "/html/body/main/section[3]/div/div[2]/div[9]/article/div[2]/p[1]"
+      "cssSelector": "main > section:nth-of-type(3) > div > div:nth-of-type(2) > div:nth-of-type(9) > article > div:nth-of-type(2) > p:nth-of-type(1)",
+      "xpath": "/html[1]/body[1]/main[1]/section[3]/div[1]/div[2]/div[9]/article[1]/div[2]/p[1]"
     },
-    "visual": { "fontSize": "30px", "fontWeight": "500" },
-    "screenshot": "our-team-item18.png",
+    "visual": {
+      "fontSize": "30px",
+      "fontWeight": "500"
+    },
+    "screenshot": "",
     "htmlSnippet": "<p class=\"h3 card-title mb-4\">Mel Harrington</p>",
     "confidence": 0.95
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Card-like content",
-    "reason": "This group of elements appears to function as a card. It contains an image, a heading-like title (\"Fleur Howard\"), body text, and a link — all within a shared <article> parent container. This pattern repeats 19 times across the page, suggesting a card-based layout that may need accessibility review.",
+    "reason": "Repeated content group (2 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/fleur-howard/. Review for keyboard focus and screen reader behaviour.",
     "location": {
-      "cssSelector": "section:nth-of-type(2) article:nth-child(1)",
-      "xpath": "/html/body/main/section[2]/div/div[2]/div[1]/article"
+      "cssSelector": "main > section:nth-of-type(2)",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]"
     },
-    "screenshot": "our-team-item0.png",
-    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">...</article>",
-    "confidence": 0.92
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<section class=\"module-people-card-grid  section-padding--normal\">\n  <div class=\"container\">\n    \n    <!--bookshop-live name(forpurpose/section-header) params(header:header subheader:subheader animate",
+    "confidence": 0.9
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Card-like content",
-    "reason": "This group of elements appears to function as a card. It contains an image, a heading-like title (\"Jake Lilley\"), body text, and a link — all within a shared <article> parent container. This pattern repeats 19 times across the page, suggesting a card-based layout that may need accessibility review.",
+    "reason": "Repeated content group (2 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/kerry-francis/. Review for keyboard focus and screen reader behaviour.",
     "location": {
-      "cssSelector": "section:nth-of-type(2) article:nth-child(2)",
-      "xpath": "/html/body/main/section[2]/div/div[2]/div[2]/article"
+      "cssSelector": "main > section:nth-of-type(3)",
+      "xpath": "/html[1]/body[1]/main[1]/section[3]"
     },
-    "screenshot": "our-team-item1.png",
-    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">...</article>",
-    "confidence": 0.92
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<section class=\"module-people-card-grid  section-padding--normal\">\n  <div class=\"container\">\n    \n    <!--bookshop-live name(forpurpose/section-header) params(header:header subheader:subheader animate",
+    "confidence": 0.9
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Card-like content",
-    "reason": "This group of elements appears to function as a card. It contains an image, a heading-like title (\"Iuni Perez\"), body text, and a link — all within a shared <article> parent container. This pattern repeats 19 times across the page, suggesting a card-based layout that may need accessibility review.",
+    "reason": "Repeated content group (4 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/fleur-howard/. Review for keyboard focus and screen reader behaviour.",
     "location": {
-      "cssSelector": "section:nth-of-type(2) article:nth-child(3)",
-      "xpath": "/html/body/main/section[2]/div/div[2]/div[3]/article"
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(1) > article",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[1]/article[1]"
     },
-    "screenshot": "our-team-item2.png",
-    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">...</article>",
-    "confidence": 0.92
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up animated\">\n  \n    <div class=\"image-container rounded-circle overflow-hidden m-auto w-80 mb-4\">\n      \n        <!--% im",
+    "confidence": 0.9
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Card-like content",
-    "reason": "This group of elements appears to function as a card. It contains an image, a heading-like title (\"Nige Cox\"), body text, and a link — all within a shared <article> parent container. This pattern repeats 19 times across the page, suggesting a card-based layout that may need accessibility review.",
+    "reason": "Repeated content group (4 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/jake-lilley/. Review for keyboard focus and screen reader behaviour.",
     "location": {
-      "cssSelector": "section:nth-of-type(2) article:nth-child(4)",
-      "xpath": "/html/body/main/section[2]/div/div[2]/div[4]/article"
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > article",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[2]/article[1]"
     },
-    "screenshot": "our-team-item3.png",
-    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">...</article>",
-    "confidence": 0.92
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up animated\">\n  \n    <div class=\"image-container rounded-circle overflow-hidden m-auto w-80 mb-4\">\n      \n        <!--% im",
+    "confidence": 0.9
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Card-like content",
-    "reason": "This group of elements appears to function as a card. It contains an image, a heading-like title (\"Paula Arkinstall\"), body text, and a link — all within a shared <article> parent container. This pattern repeats 19 times across the page, suggesting a card-based layout that may need accessibility review.",
+    "reason": "Repeated content group (4 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/iuni-perez/. Review for keyboard focus and screen reader behaviour.",
     "location": {
-      "cssSelector": "section:nth-of-type(2) article:nth-child(5)",
-      "xpath": "/html/body/main/section[2]/div/div[2]/div[5]/article"
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > article",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[3]/article[1]"
     },
-    "screenshot": "our-team-item4.png",
-    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">...</article>",
-    "confidence": 0.92
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up animated\">\n  \n    <div class=\"image-container rounded-circle overflow-hidden m-auto w-80 mb-4\">\n      \n        <!--% im",
+    "confidence": 0.9
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Card-like content",
-    "reason": "This group of elements appears to function as a card. It contains an image, a heading-like title (\"Deanna Harrison\"), body text, and a link — all within a shared <article> parent container. This pattern repeats 19 times across the page, suggesting a card-based layout that may need accessibility review.",
+    "reason": "Repeated content group (4 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/nige-cox/. Review for keyboard focus and screen reader behaviour.",
     "location": {
-      "cssSelector": "section:nth-of-type(2) article:nth-child(6)",
-      "xpath": "/html/body/main/section[2]/div/div[2]/div[6]/article"
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(4) > article",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[4]/article[1]"
     },
-    "screenshot": "our-team-item5.png",
-    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">...</article>",
-    "confidence": 0.92
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up animated\">\n  \n    <div class=\"image-container rounded-circle overflow-hidden m-auto w-80 mb-4\">\n      \n        <!--% im",
+    "confidence": 0.9
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Card-like content",
-    "reason": "This group of elements appears to function as a card. It contains an image, a heading-like title (\"Katie Brannan\"), body text, and a link — all within a shared <article> parent container. This pattern repeats 19 times across the page, suggesting a card-based layout that may need accessibility review.",
+    "reason": "Repeated content group (16 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/paula-arkinstall/. Review for keyboard focus and screen reader behaviour.",
     "location": {
-      "cssSelector": "section:nth-of-type(2) article:nth-child(7)",
-      "xpath": "/html/body/main/section[2]/div/div[2]/div[7]/article"
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(5) > article",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[5]/article[1]"
     },
-    "screenshot": "our-team-item6.png",
-    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">...</article>",
-    "confidence": 0.92
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">\n  \n    <div class=\"image-container rounded-circle overflow-hidden m-auto w-80 mb-4\">\n      \n        <!--% image perso",
+    "confidence": 0.9
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Card-like content",
-    "reason": "This group of elements appears to function as a card. It contains an image, a heading-like title (\"Rocky Webster\"), body text, and a link — all within a shared <article> parent container. This pattern repeats 19 times across the page, suggesting a card-based layout that may need accessibility review.",
+    "reason": "Repeated content group (16 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/deanna-harrison/. Review for keyboard focus and screen reader behaviour.",
     "location": {
-      "cssSelector": "section:nth-of-type(2) article:nth-child(8)",
-      "xpath": "/html/body/main/section[2]/div/div[2]/div[8]/article"
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(6) > article",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[6]/article[1]"
     },
-    "screenshot": "our-team-item7.png",
-    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">...</article>",
-    "confidence": 0.92
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">\n  \n    <div class=\"image-container rounded-circle overflow-hidden m-auto w-80 mb-4\">\n      \n        <!--% image perso",
+    "confidence": 0.9
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Card-like content",
-    "reason": "This group of elements appears to function as a card. It contains an image, a heading-like title (\"Jocelyn Kua\"), body text, and a link — all within a shared <article> parent container. This pattern repeats 19 times across the page, suggesting a card-based layout that may need accessibility review.",
+    "reason": "Repeated content group (16 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/angela-smart/. Review for keyboard focus and screen reader behaviour.",
     "location": {
-      "cssSelector": "section:nth-of-type(2) article:nth-child(9)",
-      "xpath": "/html/body/main/section[2]/div/div[2]/div[9]/article"
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(7) > article",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[7]/article[1]"
     },
-    "screenshot": "our-team-item8.png",
-    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">...</article>",
-    "confidence": 0.92
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">\n  \n    <div class=\"image-container rounded-circle overflow-hidden m-auto w-80 mb-4\">\n      \n        <!--% image perso",
+    "confidence": 0.9
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Card-like content",
-    "reason": "This group of elements appears to function as a card. It contains an image, a heading-like title (\"Donna Allan\"), body text, and a link — all within a shared <article> parent container. This pattern repeats 19 times across the page, suggesting a card-based layout that may need accessibility review.",
+    "reason": "Repeated content group (16 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/bella-tioro/. Review for keyboard focus and screen reader behaviour.",
     "location": {
-      "cssSelector": "section:nth-of-type(2) article:nth-child(10)",
-      "xpath": "/html/body/main/section[2]/div/div[2]/div[10]/article"
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(8) > article",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[8]/article[1]"
     },
-    "screenshot": "our-team-item9.png",
-    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">...</article>",
-    "confidence": 0.92
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">\n  \n    <div class=\"image-container rounded-circle overflow-hidden m-auto w-80 mb-4\">\n      \n        <!--% image perso",
+    "confidence": 0.9
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Card-like content",
-    "reason": "This group of elements appears to function as a card. It contains an image, a heading-like title (\"Kerry Francis\"), body text, and a link — all within a shared <article> parent container. This pattern repeats 19 times across the page, suggesting a card-based layout that may need accessibility review.",
+    "reason": "Repeated content group (16 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/rocky-webster/. Review for keyboard focus and screen reader behaviour.",
     "location": {
-      "cssSelector": "section:nth-of-type(3) article:nth-child(1)",
-      "xpath": "/html/body/main/section[3]/div/div[2]/div[1]/article"
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(9) > article",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[9]/article[1]"
     },
-    "screenshot": "our-team-item10.png",
-    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">...</article>",
-    "confidence": 0.92
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">\n  \n    <div class=\"image-container rounded-circle overflow-hidden m-auto w-80 mb-4\">\n      \n        <!--% image perso",
+    "confidence": 0.9
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Card-like content",
-    "reason": "This group of elements appears to function as a card. It contains an image, a heading-like title (\"Renee Rewi\"), body text, and a link — all within a shared <article> parent container. This pattern repeats 19 times across the page, suggesting a card-based layout that may need accessibility review.",
+    "reason": "Repeated content group (16 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/jocelyn-kua/. Review for keyboard focus and screen reader behaviour.",
     "location": {
-      "cssSelector": "section:nth-of-type(3) article:nth-child(2)",
-      "xpath": "/html/body/main/section[3]/div/div[2]/div[2]/article"
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(10) > article",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[10]/article[1]"
     },
-    "screenshot": "our-team-item11.png",
-    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">...</article>",
-    "confidence": 0.92
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">\n  \n    <div class=\"image-container rounded-circle overflow-hidden m-auto w-80 mb-4\">\n      \n        <!--% image perso",
+    "confidence": 0.9
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Card-like content",
-    "reason": "This group of elements appears to function as a card. It contains an image, a heading-like title (\"Rosser Thornley\"), body text, and a link — all within a shared <article> parent container. This pattern repeats 19 times across the page, suggesting a card-based layout that may need accessibility review.",
+    "reason": "Repeated content group (16 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/donna-allan/. Review for keyboard focus and screen reader behaviour.",
     "location": {
-      "cssSelector": "section:nth-of-type(3) article:nth-child(3)",
-      "xpath": "/html/body/main/section[3]/div/div[2]/div[3]/article"
+      "cssSelector": "main > section:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(11) > article",
+      "xpath": "/html[1]/body[1]/main[1]/section[2]/div[1]/div[2]/div[11]/article[1]"
     },
-    "screenshot": "our-team-item12.png",
-    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">...</article>",
-    "confidence": 0.92
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">\n  \n    <div class=\"image-container rounded-circle overflow-hidden m-auto w-80 mb-4\">\n      \n        <!--% image perso",
+    "confidence": 0.9
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Card-like content",
-    "reason": "This group of elements appears to function as a card. It contains an image, a heading-like title (\"Theresa Alaimoana\"), body text, and a link — all within a shared <article> parent container. This pattern repeats 19 times across the page, suggesting a card-based layout that may need accessibility review.",
+    "reason": "Repeated content group (16 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/kerry-francis/. Review for keyboard focus and screen reader behaviour.",
     "location": {
-      "cssSelector": "section:nth-of-type(3) article:nth-child(4)",
-      "xpath": "/html/body/main/section[3]/div/div[2]/div[4]/article"
+      "cssSelector": "main > section:nth-of-type(3) > div > div:nth-of-type(2) > div:nth-of-type(1) > article",
+      "xpath": "/html[1]/body[1]/main[1]/section[3]/div[1]/div[2]/div[1]/article[1]"
     },
-    "screenshot": "our-team-item13.png",
-    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">...</article>",
-    "confidence": 0.92
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">\n  \n    <div class=\"image-container rounded-circle overflow-hidden m-auto w-80 mb-4\">\n      \n        <!--% image perso",
+    "confidence": 0.9
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Card-like content",
-    "reason": "This group of elements appears to function as a card. It contains an image, a heading-like title (\"David Baines\"), body text, and a link — all within a shared <article> parent container. This pattern repeats 19 times across the page, suggesting a card-based layout that may need accessibility review.",
+    "reason": "Repeated content group (16 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/renee-rewi/. Review for keyboard focus and screen reader behaviour.",
     "location": {
-      "cssSelector": "section:nth-of-type(3) article:nth-child(5)",
-      "xpath": "/html/body/main/section[3]/div/div[2]/div[5]/article"
+      "cssSelector": "main > section:nth-of-type(3) > div > div:nth-of-type(2) > div:nth-of-type(2) > article",
+      "xpath": "/html[1]/body[1]/main[1]/section[3]/div[1]/div[2]/div[2]/article[1]"
     },
-    "screenshot": "our-team-item14.png",
-    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">...</article>",
-    "confidence": 0.92
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">\n  \n    <div class=\"image-container rounded-circle overflow-hidden m-auto w-80 mb-4\">\n      \n        <!--% image perso",
+    "confidence": 0.9
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Card-like content",
-    "reason": "This group of elements appears to function as a card. It contains an image, a heading-like title (\"Geoff Smith\"), body text, and a link — all within a shared <article> parent container. This pattern repeats 19 times across the page, suggesting a card-based layout that may need accessibility review.",
+    "reason": "Repeated content group (16 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/rosser-thornley/. Review for keyboard focus and screen reader behaviour.",
     "location": {
-      "cssSelector": "section:nth-of-type(3) article:nth-child(6)",
-      "xpath": "/html/body/main/section[3]/div/div[2]/div[6]/article"
+      "cssSelector": "main > section:nth-of-type(3) > div > div:nth-of-type(2) > div:nth-of-type(3) > article",
+      "xpath": "/html[1]/body[1]/main[1]/section[3]/div[1]/div[2]/div[3]/article[1]"
     },
-    "screenshot": "our-team-item15.png",
-    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">...</article>",
-    "confidence": 0.92
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">\n  \n    <div class=\"image-container rounded-circle overflow-hidden m-auto w-80 mb-4\">\n      \n        <!--% image perso",
+    "confidence": 0.9
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Card-like content",
-    "reason": "This group of elements appears to function as a card. It contains an image, a heading-like title (\"Sally Morrison\"), body text, and a link — all within a shared <article> parent container. This pattern repeats 19 times across the page, suggesting a card-based layout that may need accessibility review.",
+    "reason": "Repeated content group (16 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/theresa-alaimoana/. Review for keyboard focus and screen reader behaviour.",
     "location": {
-      "cssSelector": "section:nth-of-type(3) article:nth-child(7)",
-      "xpath": "/html/body/main/section[3]/div/div[2]/div[7]/article"
+      "cssSelector": "main > section:nth-of-type(3) > div > div:nth-of-type(2) > div:nth-of-type(4) > article",
+      "xpath": "/html[1]/body[1]/main[1]/section[3]/div[1]/div[2]/div[4]/article[1]"
     },
-    "screenshot": "our-team-item16.png",
-    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">...</article>",
-    "confidence": 0.92
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">\n  \n    <div class=\"image-container rounded-circle overflow-hidden m-auto w-80 mb-4\">\n      \n        <!--% image perso",
+    "confidence": 0.9
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Card-like content",
-    "reason": "This group of elements appears to function as a card. It contains an image, a heading-like title (\"Anika Forsman\"), body text, and a link — all within a shared <article> parent container. This pattern repeats 19 times across the page, suggesting a card-based layout that may need accessibility review.",
+    "reason": "Repeated content group (16 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/david-baines/. Review for keyboard focus and screen reader behaviour.",
     "location": {
-      "cssSelector": "section:nth-of-type(3) article:nth-child(8)",
-      "xpath": "/html/body/main/section[3]/div/div[2]/div[8]/article"
+      "cssSelector": "main > section:nth-of-type(3) > div > div:nth-of-type(2) > div:nth-of-type(5) > article",
+      "xpath": "/html[1]/body[1]/main[1]/section[3]/div[1]/div[2]/div[5]/article[1]"
     },
-    "screenshot": "our-team-item17.png",
-    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">...</article>",
-    "confidence": 0.92
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">\n  \n    <div class=\"image-container rounded-circle overflow-hidden m-auto w-80 mb-4\">\n      \n        <!--% image perso",
+    "confidence": 0.9
   },
   {
     "url": "https://www.fincap.org.nz/our-team/",
     "type": "Card-like content",
-    "reason": "This group of elements appears to function as a card. It contains an image, a heading-like title (\"Mel Harrington\"), body text, and a link — all within a shared <article> parent container. This pattern repeats 19 times across the page, suggesting a card-based layout that may need accessibility review.",
+    "reason": "Repeated content group (16 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/geoff-smith/. Review for keyboard focus and screen reader behaviour.",
     "location": {
-      "cssSelector": "section:nth-of-type(3) article:nth-child(9)",
-      "xpath": "/html/body/main/section[3]/div/div[2]/div[9]/article"
+      "cssSelector": "main > section:nth-of-type(3) > div > div:nth-of-type(2) > div:nth-of-type(6) > article",
+      "xpath": "/html[1]/body[1]/main[1]/section[3]/div[1]/div[2]/div[6]/article[1]"
     },
-    "screenshot": "our-team-item18.png",
-    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">...</article>",
-    "confidence": 0.92
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">\n  \n    <div class=\"image-container rounded-circle overflow-hidden m-auto w-80 mb-4\">\n      \n        <!--% image perso",
+    "confidence": 0.9
+  },
+  {
+    "url": "https://www.fincap.org.nz/our-team/",
+    "type": "Card-like content",
+    "reason": "Repeated content group (16 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/sally-morrison/. Review for keyboard focus and screen reader behaviour.",
+    "location": {
+      "cssSelector": "main > section:nth-of-type(3) > div > div:nth-of-type(2) > div:nth-of-type(7) > article",
+      "xpath": "/html[1]/body[1]/main[1]/section[3]/div[1]/div[2]/div[7]/article[1]"
+    },
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">\n  \n    <div class=\"image-container rounded-circle overflow-hidden m-auto w-80 mb-4\">\n      \n        <!--% image perso",
+    "confidence": 0.9
+  },
+  {
+    "url": "https://www.fincap.org.nz/our-team/",
+    "type": "Card-like content",
+    "reason": "Repeated content group (16 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/anika-forsman/. Review for keyboard focus and screen reader behaviour.",
+    "location": {
+      "cssSelector": "main > section:nth-of-type(3) > div > div:nth-of-type(2) > div:nth-of-type(8) > article",
+      "xpath": "/html[1]/body[1]/main[1]/section[3]/div[1]/div[2]/div[8]/article[1]"
+    },
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">\n  \n    <div class=\"image-container rounded-circle overflow-hidden m-auto w-80 mb-4\">\n      \n        <!--% image perso",
+    "confidence": 0.9
+  },
+  {
+    "url": "https://www.fincap.org.nz/our-team/",
+    "type": "Card-like content",
+    "reason": "Repeated content group (16 instances with matching structure). Contains image, text, and link to https://www.fincap.org.nz/people/mel-harrington/. Review for keyboard focus and screen reader behaviour.",
+    "location": {
+      "cssSelector": "main > section:nth-of-type(3) > div > div:nth-of-type(2) > div:nth-of-type(9) > article",
+      "xpath": "/html[1]/body[1]/main[1]/section[3]/div[1]/div[2]/div[9]/article[1]"
+    },
+    "visual": {},
+    "screenshot": "",
+    "htmlSnippet": "<article class=\"module-person-card module-card card text-center animate--fade-up\">\n  \n    <div class=\"image-container rounded-circle overflow-hidden m-auto w-80 mb-4\">\n      \n        <!--% image perso",
+    "confidence": 0.9
+  },
+  {
+    "url": "https://www.fincap.org.nz/our-team/",
+    "type": "Government identity",
+    "reason": "Logo/branding detected: nav-logo picture-container. Verify it meets government identity requirements.",
+    "location": {
+      "cssSelector": "#mainnavigationBar > div > a > div",
+      "xpath": ""
+    },
+    "htmlSnippet": "<div class=\"nav-logo picture-container\" style=\"width:206px; height:94px;\">\n            \n              <picture><source data-cms-original-srcset=\"/optimized/iqlW_VNwQ0-284.webp 284w, /optimized/iqlW_VN",
+    "confidence": 0.8
+  },
+  {
+    "url": "https://www.fincap.org.nz/our-team/",
+    "type": "Government identity",
+    "reason": "No copyright notice detected on the page.",
+    "location": {
+      "cssSelector": "body",
+      "xpath": "/html/body"
+    },
+    "htmlSnippet": "",
+    "confidence": 0.6
+  },
+  {
+    "url": "https://www.fincap.org.nz/our-team/",
+    "type": "Government identity",
+    "reason": "No privacy policy link detected on the page.",
+    "location": {
+      "cssSelector": "body",
+      "xpath": "/html/body"
+    },
+    "htmlSnippet": "",
+    "confidence": 0.7
+  },
+  {
+    "url": "https://www.fincap.org.nz/our-team/",
+    "type": "Disclosure widget detected",
+    "reason": "Element with aria-expanded=\"false\" detected. aria-controls points to #navbarSupportedContent but target element not found on page.",
+    "location": {
+      "cssSelector": "button.navbar-toggler.btn-links",
+      "xpath": ""
+    },
+    "htmlSnippet": "<button aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\" class=\"navbar-toggler btn-links \" data-bs-target=\"#navbarSupportedContent\" data-bs-toggle=\"collapse\"",
+    "confidence": 0.85
+  },
+  {
+    "url": "https://www.fincap.org.nz/our-team/",
+    "type": "Heading text quality",
+    "reason": "Empty <h2> heading detected. Headings must have text content.",
+    "location": {
+      "cssSelector": "#footer > div > div > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(2)",
+      "xpath": ""
+    },
+    "htmlSnippet": "<h2 class=\"footer--header footer--social-header\"></h2>",
+    "confidence": 0.95
+  },
+  {
+    "url": "https://www.fincap.org.nz/our-team/",
+    "type": "Link quality",
+    "reason": "Link \"www.moneytalks.co.nz\" opens in a new window (target=\"_blank\") without indicating this to users. Add \"(opens in new tab)\" or equivalent to the link text or aria-label.",
+    "location": {
+      "cssSelector": "#footer > div > div > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > p:nth-of-type(3) > a",
+      "xpath": ""
+    },
+    "htmlSnippet": "<a href=\"https://www.moneytalks.co.nz\" rel=\"noopener\" target=\"_blank\">www.moneytalks.co.nz</a>",
+    "confidence": 0.8
+  },
+  {
+    "url": "https://www.fincap.org.nz/our-team/",
+    "type": "Link quality",
+    "reason": "Link \"For Purpose\" opens in a new window (target=\"_blank\") without indicating this to users. Add \"(opens in new tab)\" or equivalent to the link text or aria-label.",
+    "location": {
+      "cssSelector": "#footer > div > div > div:nth-of-type(2) > div:nth-of-type(2) > p > a",
+      "xpath": ""
+    },
+    "htmlSnippet": "<a class=\"footer--built-by-link\" href=\"https://www.forpurpose.nz/\" target=\"_blank\">For Purpose</a>",
+    "confidence": 0.8
+  },
+  {
+    "url": "https://www.fincap.org.nz/our-team/",
+    "type": "Skip link",
+    "reason": "No skip navigation link detected. Pages should include a \"Skip to content\" link as the first focusable element for keyboard users (WCAG 2.4.1).",
+    "location": {
+      "cssSelector": "body",
+      "xpath": "/html/body"
+    },
+    "htmlSnippet": "",
+    "confidence": 0.8
+  },
+  {
+    "url": "https://www.fincap.org.nz/our-team/",
+    "type": "Page title",
+    "reason": "Page title found: \"Our Team | FinCap\" (17 characters). Review for accuracy and descriptiveness.",
+    "location": {
+      "cssSelector": "head > title",
+      "xpath": "/html/head/title"
+    },
+    "htmlSnippet": "<title>Our Team | FinCap</title>",
+    "confidence": 0.5
+  },
+  {
+    "url": "https://www.fincap.org.nz/our-team/",
+    "type": "Print stylesheet reminder",
+    "reason": "No print stylesheet detected. Manual print check recommended — pages should be usable when printed.",
+    "location": {
+      "cssSelector": "head",
+      "xpath": "/html/head"
+    },
+    "htmlSnippet": "",
+    "confidence": 0.5
   }
 ]

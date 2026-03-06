@@ -88,12 +88,17 @@ You can use these commands, but you don't have to. You can simply ask in natural
 
 ## What Does a Scan Look Like?
 
-Here's a real example. We scanned the [FinCap Our Team page](https://www.fincap.org.nz/our-team/) and found 38 patterns to review:
+Here's a real example. We scanned the [FinCap Our Team page](https://www.fincap.org.nz/our-team/) and found 52 patterns to review:
 
-- **19 team member names** styled to look like headings (large, bold, pink) but marked up as `<p>` tags instead of `<h3>`. Screen reader users can't navigate to them using heading shortcuts.
-- **19 card structures** — repeated person cards that may need review for keyboard focus and screen reader behaviour.
-- **1 link mismatch** — a card displaying "Katie Brannan" but linking to a different person's page.
-- **1 empty heading** — a blank `<h2>` in the footer.
+- **20 heading-like elements** — team member names styled to look like headings (large, bold) but marked up as `<p>` tags instead of `<h3>`. Screen reader users can't navigate to them using heading shortcuts.
+- **22 card structures** — repeated person cards that may need review for keyboard focus and screen reader behaviour.
+- **3 government identity checks** — logo detected, but no copyright notice or privacy policy link found.
+- **2 link quality issues** — links opening in new windows without warning users.
+- **1 disclosure widget** — an ARIA-expanded element detected for review.
+- **1 heading text quality** — an empty heading detected.
+- **1 skip link check** — no skip navigation link found.
+- **1 page title** — title present and reviewed for descriptiveness.
+- **1 print stylesheet reminder** — print styles detected for manual verification.
 
 Every finding includes a plain-language explanation, the exact CSS selector to locate it, and a confidence score. See the [full scan report](output/accessibility-scan-report.md) and [more examples](docs/EXAMPLES.md).
 
@@ -115,6 +120,16 @@ Every finding includes a plain-language explanation, the exact CSS selector to l
 - Text that looks like a heading but isn't marked up as one
 - Card-like content groups that may need accessibility review
 - Elements with heading CSS classes (e.g., `class="h3"`) on non-heading tags
+- Government identity elements (branding, contact info, copyright, privacy links)
+- CAPTCHA implementations that may be accessibility barriers
+- Carousels and sliders without pause/stop controls
+- Disclosure widgets and accordions missing proper ARIA attributes
+- Heading text that is vague, too long, duplicated, or skips hierarchy levels
+- Links with non-descriptive text, missing new-window warnings, or duplicate destinations
+- Skip navigation link presence and functionality
+- Modal dialog accessibility implementation patterns
+- Page title quality (missing, empty, or generic titles)
+- Print stylesheet presence reminders
 
 For technical details, see [CWAC MCP Server](docs/CWAC-MCP.md) and [Visual Pattern Scanner](docs/VISUAL-SCANNER.md).
 
@@ -122,7 +137,6 @@ For technical details, see [CWAC MCP Server](docs/CWAC-MCP.md) and [Visual Patte
 
 ## Future Scope
 
-- Interactive/dynamic content detection (modals, panels)
 - Sticky/fixed-position content detection
 - Combined reporting (visual + CWAC findings in one report)
 - Persistent scan state across server restarts
@@ -132,7 +146,7 @@ For technical details, see [CWAC MCP Server](docs/CWAC-MCP.md) and [Visual Patte
 
 ## Acknowledgements
 
-This tool was instigated by **Di Drayton**, Accessibility Subject Matter Expert, who defined the original specification for visual pattern detection ([SPEC-000-A](docs/specs/SPEC-000-A-visual-pattern-scanner.md)).
+This tool was instigated by **Di Drayton**, Accessibility Subject Matter Expert, who defined the original specification for visual pattern detection ([SPEC-000-A](docs/specs/SPEC-000-A-visual-pattern-scanner.md), [SPEC-000-B](docs/specs/SPEC-000-B-visual-pattern-scanner-additions.md)).
 
 The CWAC integration wraps the [Centralised Web Accessibility Checker](https://github.com/GOVTNZ/cwac), created by the **Web Standards team** within the Digital Public Service branch of **Te Tari Taiwhenua, Department of Internal Affairs**, New Zealand Government. CWAC is licensed under GPL-3.0.
 

@@ -111,9 +111,10 @@ Defining strict rules for heading-like and card-like detection:
 
 ## Referenced Specification
 
-| Spec ID    | Title                   | Version |
-|------------|-------------------------|---------|
-| SPEC-000-A | Visual Pattern Scanner  | A       |
+| Spec ID    | Title                                          | Version |
+|------------|------------------------------------------------|---------|
+| SPEC-000-A | Visual Pattern Scanner                         | A       |
+| SPEC-000-B | Visual Pattern Scanner — Additional Checks     | B       |
 
 ## Status History
 

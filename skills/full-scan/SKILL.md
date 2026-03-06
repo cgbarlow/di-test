@@ -20,7 +20,7 @@ Run both a CWAC compliance scan and a visual pattern scan against a URL, then ge
 This command runs two scans in parallel and generates a combined summary:
 
 1. **CWAC scan** — WCAG compliance checking (axe-core violations, language readability, reflow issues)
-2. **Visual pattern scan** — Detects heading-like and card-like content that may lack semantic markup
+2. **Visual pattern scan** — Detects heading-like content, card-like content, government identity, CAPTCHAs, carousels, disclosure widgets, heading text quality, link quality, skip links, modals, page titles, and print stylesheet issues
 3. **Reports** — Generates reports for both scans in Markdown and Word formats
 
 ## Execution Steps
@@ -49,7 +49,7 @@ Generate reports for both scans:
 
 Present a single combined summary to the user covering:
 - **CWAC findings** — Total issues, critical/serious counts, top violations
-- **Visual pattern findings** — Heading-like and card-like candidates found
+- **Visual pattern findings** — All detected patterns (headings, cards, government identity, CAPTCHAs, carousels, disclosures, link quality, skip links, modals, page titles, print stylesheets)
 - **Report locations** — Paths to all generated report files
 
 ## Examples

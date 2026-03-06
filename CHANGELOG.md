@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2026-03-06
+
+### Added
+
+- **SPEC-000-B** — Visual pattern scanner additional checks specification covering 10 new check categories.
+- **10 new Gherkin feature files** for visual pattern detection:
+  - `government-identity.feature` — Government branding, contact info, copyright, privacy links
+  - `captcha-detection.feature` — CAPTCHA implementations (reCAPTCHA, hCaptcha, custom)
+  - `carousel-detection.feature` — Carousels/sliders and pause control detection
+  - `disclosure-accordion-detection.feature` — Disclosure widgets and accordion patterns
+  - `heading-text-quality.feature` — Vague, long, duplicate, or hierarchy-skipping headings
+  - `link-quality.feature` — Non-descriptive link text, new window warnings, duplicate links, ARIA
+  - `skip-link-detection.feature` — Skip navigation link presence and functionality
+  - `modal-detection.feature` — Modal dialog implementation patterns
+  - `page-title-check.feature` — Page title presence and quality
+  - `print-stylesheet-reminder.feature` — Print stylesheet presence reminder
+- **Updated output-format.feature** — Added 10 new finding type values.
+- **Updated ADR-000** — References SPEC-000-B in specification table.
+
+### Changed
+
+- **visual-scan SKILL.md** — Lists all 12 check categories (2 original + 10 new).
+- **full-scan SKILL.md** — References expanded visual pattern detection capabilities.
+- **README.md** — Lists all visual pattern scan check categories.
+
 ## [0.3.0] - 2026-02-24
 
 ### Added
