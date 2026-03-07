@@ -15,6 +15,13 @@ Usage:
 """
 
 import os
+import sys
+
+# Ensure the package root is on sys.path when server.py is run as a script.
+_PLUGIN_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _PLUGIN_ROOT not in sys.path:
+    sys.path.insert(0, _PLUGIN_ROOT)
+
 from datetime import datetime
 
 from mcp.server.fastmcp import FastMCP
