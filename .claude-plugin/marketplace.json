@@ -14,7 +14,7 @@
       "description": "Accessibility testing tool that finds WCAG violations and catches patterns automated tools miss — like text that looks like a heading but isn't marked up as one. Install as a Claude Code plugin and scan any URL.",
       "source": {
         "source": "url",
-        "url": "https://github.com/cgbarlow/di-test.git"
+        "url": "https://github.com/Di-D/di-test.git"
       },
       "author": {
         "name": "Chris Barlow"
